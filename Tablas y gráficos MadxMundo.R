@@ -55,9 +55,14 @@ antes_pais_g <- madrileños %>%
   ggplot(aes(antes_pais, fill = antes_pais)) +
   geom_bar() +
   theme(legend.position = "bottom") +
-  ggtitle("antes_pais") +
+  ggtitle("Había anteriormente en su país de residencia") +
   scale_y_continuous(labels=scales::percent) 
-antes_pais_g
+antes_pais_g +  
+  theme(legend.position = "none",
+                      axis.text.x = element_text(angle = 45, hjust = 1)) +
+  ylab("") +
+  xlab("") +
+
 # Grafico de barras situacion_españa (en %)
 
 situacion_españa_g <- madrileños %>%
@@ -67,7 +72,12 @@ situacion_españa_g <- madrileños %>%
   theme(legend.position = "bottom") +
   ggtitle("Situación en España") +
   scale_y_continuous(labels=scales::percent) 
-situacion_españa_g
+situacion_españa_g +
+  theme(legend.position = "none",
+        axis.text.x = element_text(angle = 45, hjust = 1)) +
+  ylab("") +
+  xlab("") +
+  
 
 #Graficos de barras (%) de todas las dificultades
   # dific_idioma 
@@ -352,79 +362,98 @@ registrado_consulado_g <- madrileños %>%
 registrado_consulado_g
 
 # Grafico de barras con el % apilado si/no registro_votar registro_documentacion registro_contacto registro_prevencion registro_certificado registro_franquicia registro_transacciones registro_iva
-registro_votar_g <- madrileños %>%
-  filter(!is.na(registro_votar)) %>%
-  ggplot(aes(registro_votar, fill = registro_votar)) +
-  geom_bar() +
-  theme(legend.position = "bottom") +
-  ggtitle("registro_votar") +
-  scale_y_continuous(labels=scales::percent)
-registro_votar_g
 
-registro_documentacion_g <- madrileños %>%
-  filter(!is.na(registro_documentacion)) %>%
-  ggplot(aes(registro_documentacion, fill = registro_documentacion)) +
+motivo_registro_g <- madrileños %>%
+  filter(!is.na(motivo_registro)) %>%
+  ggplot(aes(motivo_registro, fill = motivo_registro)) +
   geom_bar() +
   theme(legend.position = "bottom") +
-  ggtitle("registro_documentacion") +
+  ggtitle("motivo_registro") +
   scale_y_continuous(labels=scales::percent)
-registro_documentacion_g
+motivo_registro_g
 
-registro_contacto_g <- madrileños %>%
-  filter(!is.na(registro_contacto)) %>%
-  ggplot(aes(registro_contacto, fill = registro_contacto)) +
-  geom_bar() +
-  theme(legend.position = "bottom") +
-  ggtitle("registro_contacto") +
-  scale_y_continuous(labels=scales::percent)
-registro_contacto_g
-
-registro_prevencion_g <- madrileños %>%
-  filter(!is.na(registro_prevencion)) %>%
-  ggplot(aes(registro_prevencion, fill = registro_prevencion)) +
-  geom_bar() +
-  theme(legend.position = "bottom") +
-  ggtitle("registro_prevencion") +
-  scale_y_continuous(labels=scales::percent)
-registro_prevencion_g
-
-registro_certificado_g <- madrileños %>%
-  filter(!is.na(registrado_consulado)) %>%
-  ggplot(aes(registro_certificado, fill = registro_certificado)) +
-  geom_bar() +
-  theme(legend.position = "bottom") +
-  ggtitle("registro_certificado") +
-  scale_y_continuous(labels=scales::percent)
-registro_certificado_g
-
-registro_franquicia_g <- madrileños %>%
-  filter(!is.na(registrado_consulado)) %>%
-  ggplot(aes(registro_franquicia, fill = registro_franquicia)) +
-  geom_bar() +
-  theme(legend.position = "bottom") +
-  ggtitle("registro_franquicia") +
-  scale_y_continuous(labels=scales::percent)
-registro_franquicia_g
-
-registro_transacciones_g <- madrileños %>%
-  filter(!is.na(registro_transacciones)) %>%
-  ggplot(aes(registro_transacciones, fill = registro_transacciones)) +
-  geom_bar() +
-  theme(legend.position = "bottom") +
-  ggtitle("registro_transacciones") +
-  scale_y_continuous(labels=scales::percent)
-registro_transacciones_g
-
-registro_iva_g  <- madrileños %>%
-  filter(!is.na(registro_iva)) %>%
-  ggplot(aes(registro_iva, fill = registro_iva)) +
-  geom_bar() +
-  theme(legend.position = "bottom") +
-  ggtitle("registro_iva") +
-  scale_y_continuous(labels=scales::percent)
-registro_iva_g
+    registro_votar_g <- madrileños %>%
+      filter(!is.na(registro_votar)) %>%
+      ggplot(aes(registro_votar, fill = registro_votar)) +
+      geom_bar() +
+      theme(legend.position = "bottom") +
+      ggtitle("registro_votar") +
+      scale_y_continuous(labels=scales::percent)
+    registro_votar_g
+    
+    registro_documentacion_g <- madrileños %>%
+      filter(!is.na(registro_documentacion)) %>%
+      ggplot(aes(registro_documentacion, fill = registro_documentacion)) +
+      geom_bar() +
+      theme(legend.position = "bottom") +
+      ggtitle("registro_documentacion") +
+      scale_y_continuous(labels=scales::percent)
+    registro_documentacion_g
+    
+    registro_contacto_g <- madrileños %>%
+      filter(!is.na(registro_contacto)) %>%
+      ggplot(aes(registro_contacto, fill = registro_contacto)) +
+      geom_bar() +
+      theme(legend.position = "bottom") +
+      ggtitle("registro_contacto") +
+      scale_y_continuous(labels=scales::percent)
+    registro_contacto_g
+    
+    registro_prevencion_g <- madrileños %>%
+      filter(!is.na(registro_prevencion)) %>%
+      ggplot(aes(registro_prevencion, fill = registro_prevencion)) +
+      geom_bar() +
+      theme(legend.position = "bottom") +
+      ggtitle("registro_prevencion") +
+      scale_y_continuous(labels=scales::percent)
+    registro_prevencion_g
+    
+    registro_certificado_g <- madrileños %>%
+      filter(!is.na(registrado_consulado)) %>%
+      ggplot(aes(registro_certificado, fill = registro_certificado)) +
+      geom_bar() +
+      theme(legend.position = "bottom") +
+      ggtitle("registro_certificado") +
+      scale_y_continuous(labels=scales::percent)
+    registro_certificado_g
+    
+    registro_franquicia_g <- madrileños %>%
+      filter(!is.na(registrado_consulado)) %>%
+      ggplot(aes(registro_franquicia, fill = registro_franquicia)) +
+      geom_bar() +
+      theme(legend.position = "bottom") +
+      ggtitle("registro_franquicia") +
+      scale_y_continuous(labels=scales::percent)
+    registro_franquicia_g
+    
+    registro_transacciones_g <- madrileños %>%
+      filter(!is.na(registro_transacciones)) %>%
+      ggplot(aes(registro_transacciones, fill = registro_transacciones)) +
+      geom_bar() +
+      theme(legend.position = "bottom") +
+      ggtitle("registro_transacciones") +
+      scale_y_continuous(labels=scales::percent)
+    registro_transacciones_g
+    
+    registro_iva_g  <- madrileños %>%
+      filter(!is.na(registro_iva)) %>%
+      ggplot(aes(registro_iva, fill = registro_iva)) +
+      geom_bar() +
+      theme(legend.position = "bottom") +
+      ggtitle("registro_iva") +
+      scale_y_continuous(labels=scales::percent)
+    registro_iva_g
 
 # Grafico de barras con el % apilado si/no no_registro_conocia no_registro_sabia no_registro_tramites no_registro_padron no_registro_covid no_registro_admin no_registro_aporta
+motivo_no_registro_g  <- madrileños %>%
+  filter(!is.na(motivo_no_registro)) %>%
+  ggplot(aes(motivo_no_registro, fill = motivo_no_registro)) +
+  geom_bar() +
+  theme(legend.position = "bottom") +
+  ggtitle("motivo_no_registro") +
+  scale_y_continuous(labels=scales::percent)
+motivo_no_registro_g
+
 
 # Grafico de barras con % prob_trabajo
 prob_trabajo_g <- madrileños %>%
