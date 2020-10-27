@@ -333,10 +333,32 @@ educacion_g  + scale_y_continuous(labels=scales::percent)
 # Grafico de barras con  % actividad_principal  --- hay muchas categorias, igual habria que juntarlas 0; 1; 2; 3-5; 6; 7; 8-10; 11-13, 14-15 o algo asi, como veas oportuno
 
 # Grafico de barras con  % tipo_contrato
+tipo_contrato_g <- madrileños %>%
+  filter(!is.na(tipo_contrato)) %>%
+  ggplot(aes(tipo_contrato, fill = tipo_contrato)) +
+  geom_bar() +
+  theme(legend.position = "bottom") +
+  ggtitle("tipo_contrato")
+tipo_contrato_g + scale_y_continuous(labels=scales::percent)
 
 # Grafico de barras con  % dedicacion
+dedicacion_g <- madrileños %>%
+  filter(!is.na(dedicacion)) %>%
+  ggplot(aes(dedicacion, fill = dedicacion)) +
+  geom_bar() +
+  theme(legend.position = "bottom") +
+  ggtitle("dedicacion")
+dedicacion_g + scale_y_continuous(labels=scales::percent)
+
 
 # Grafico de barras con  % salario
+salario_g <- madrileños %>%
+  filter(!is.na(salario)) %>%
+  ggplot(aes(salario, fill = salario)) +
+  geom_bar() +
+  theme(legend.position = "bottom") +
+  ggtitle("salario")
+salario_g + scale_y_continuous(labels=scales::percent)
 
 
 
