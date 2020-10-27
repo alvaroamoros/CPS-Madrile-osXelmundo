@@ -24,7 +24,7 @@ edad_intervalos_g <- madrileños %>%
   theme(legend.position = "none") +
   ylab("") +
   xlab("") +
-  ggtitle("Edad Intervalos")  + 
+  ggtitle("Edad")  + 
   scale_y_continuous(labels=scales::percent)
 edad_intervalos_g
 
@@ -45,8 +45,25 @@ años_fuera_intervalo_g
   #Personalmente tambíen creo q los quesos son bastante poco intuitivos de interpretar no se si podríamos hacer simple gráfico de barras aqui.
 
 # Pie chart de nacido_madrid (en %)
-
+antes_pais_g <- madrileños %>%
+  filter(!is.na(nacido_madrid)) %>%
+  ggplot(aes(nacido_madrid, fill = nacido_madrid)) +
+  geom_bar() +
+  theme(legend.position = "none") +
+  ggtitle("Nacidos en Madrid") +
+  scale_y_continuous(labels=scales::percent) 
+antes_pais_g +  ylab("") +
+  xlab("") 
 # Pie chart de nacionalidad (en %)
+nacionalidad_g <- madrileños %>%
+  filter(!is.na(nacionalidad)) %>%
+  ggplot(aes(nacionalidad, fill = nacionalidad)) +
+  geom_bar() +
+  theme(legend.position = "none") +
+  ggtitle("Nacionalidad española") +
+  scale_y_continuous(labels=scales::percent) 
+nacionalidad_g +  ylab("") +
+  xlab("") 
 
 # Grafico de barras con el % apilado si/no en antes_turismo antes_laboral antes_familia antes_erasmus antes_beca antes_vivido antes_no
 
@@ -57,11 +74,13 @@ antes_pais_g <- madrileños %>%
   theme(legend.position = "bottom") +
   ggtitle("Había anteriormente en su país de residencia") +
   scale_y_continuous(labels=scales::percent) 
+
 antes_pais_g +  
   theme(legend.position = "none",
                       axis.text.x = element_text(angle = 45, hjust = 1)) +
   ylab("") +
-  xlab("") +
+  xlab("") 
+
 
 # Grafico de barras situacion_españa (en %)
 
@@ -76,7 +95,7 @@ situacion_españa_g +
   theme(legend.position = "none",
         axis.text.x = element_text(angle = 45, hjust = 1)) +
   ylab("") +
-  xlab("") +
+  xlab("") 
   
 
 #Graficos de barras (%) de todas las dificultades
@@ -87,14 +106,15 @@ situacion_españa_g +
   # dific_tramites 
   # dific_sanidad 
   # dific_integracion 
-  # dific_psico 
+ 
+ # dific_psico 
  dific_idioma_g <- madrileños %>%
     filter(!is.na(dific_idioma)) %>%
     ggplot(aes(dific_idioma, fill = dific_idioma)) +
     geom_bar() +
     theme(legend.position = "none") +
-    ggtitle("Situación en España") +
-   scale_y_continuous(labels=scales::percent) 
+    ggtitle("Dificultades con el idioma en el país de destino") +
+    scale_y_continuous(labels=scales::percent) 
  dific_idioma_g
   
 dific_recursos_g <- madrileños %>%
@@ -102,63 +122,77 @@ dific_recursos_g <- madrileños %>%
     ggplot(aes(dific_recursos, fill = dific_recursos)) +
     geom_bar() +
     theme(legend.position = "none") +
-    ggtitle("dific_recursos") +
+    ggtitle("Dificultades financieras al mudarse al país de destino") +
   scale_y_continuous(labels=scales::percent) 
-dific_recursos_g
+dific_recursos_g +
+  ylab("") +
+  xlab("")
   
 dific_idioma_g <- madrileños %>%
     filter(!is.na(situacion_españa)) %>%
     ggplot(aes(dific_idioma, fill = dific_idioma)) +
     geom_bar() +
     theme(legend.position = "none") +
-    ggtitle("Situación en España") + 
+    ggtitle("Dificultades con el idioma en país de destino") + 
   scale_y_continuous(labels=scales::percent) 
-dific_idioma_g
+dific_idioma_g +  ylab("") +
+  xlab("")
   
 dific_alojamiento_g <- madrileños %>%
     filter(!is.na(dific_alojamiento)) %>%
     ggplot(aes(dific_alojamiento, fill = dific_alojamiento)) +
     geom_bar() +
     theme(legend.position = "none") +
-    ggtitle("dific_alojamiento") +
+    ggtitle("Dificultades con el alojamiento en el país de destino") +
   scale_y_continuous(labels=scales::percent) 
-dific_alojamiento_g
+dific_alojamiento_g +
+  ylab("") +
+  xlab("")
   
 dific_laborales_g <- madrileños %>%
     filter(!is.na(dific_laborales)) %>%
     ggplot(aes(dific_laborales, fill = dific_laborales)) +
     geom_bar() +
     theme(legend.position = "none") +
-    ggtitle("dific_laborales") +
+    ggtitle("Dificultades laborales en el país de destino") +
   scale_y_continuous(labels=scales::percent) 
-dific_laborales_g
+dific_laborales_g +
+  ylab("") +
+  xlab("")
   
-  dific_tramites_g <- madrileños %>%
+dific_tramites_g <- madrileños %>%
     filter(!is.na(dific_tramites)) %>%
     ggplot(aes(dific_tramites, fill = dific_tramites)) +
     geom_bar() +
     theme(legend.position = "none") +
-    ggtitle("dific_tramites") +
+    ggtitle("Dificultades conocimiento trámites administrativos en el país de destino") +
     scale_y_continuous(labels=scales::percent) 
-dific_tramites_g
+dific_tramites_g +
+  ylab("") +
+  xlab("")
   
 dific_sanidad_g <- madrileños %>%
     filter(!is.na(dific_sanidad)) %>%
     ggplot(aes(dific_sanidad, fill = dific_sanidad)) +
     geom_bar() +
     theme(legend.position = "none") +
-    ggtitle("dific_sanidad") +
+    ggtitle("Dificultades conocimiento questiones sanitarias en el país de destino") +
   scale_y_continuous(labels=scales::percent) 
-dific_sanidad_g
+dific_sanidad_g +
+  ylab("") +
+  xlab("")
   
 dific_integracion_g <- madrileños %>%
     filter(!is.na(dific_integracion)) %>%
     ggplot(aes(dific_integracion, fill = dific_integracion)) +
     geom_bar() +
     theme(legend.position = "none") +
-    ggtitle("dific_integracion") + 
+    ggtitle("Dificultades para integrarse en la sociedad en el país de destino") + 
   scale_y_continuous(labels=scales::percent) 
-dific_integracion_g
+dific_integracion_g +
+  ylab("") +
+  xlab("")
+  
 
   
 dific_psico_g <- madrileños %>%
@@ -166,9 +200,11 @@ dific_psico_g <- madrileños %>%
     ggplot(aes(dific_psico, fill = dific_psico)) +
     geom_bar() +
     theme(legend.position = "none") +
-    ggtitle("dific_psico") + 
+    ggtitle("Dificultades psicológicas en el país de destino") + 
   scale_y_continuous(labels=scales::percent) 
-dific_psico_g
+dific_psico_g +
+  ylab("") +
+  xlab("")
 
 # grafico de barras (%) viajes_madrid 
   
@@ -176,10 +212,15 @@ viajes_madrid_g <- madrileños %>%
     filter(!is.na(dific_psico)) %>%
     ggplot(aes(viajes_madrid, fill = viajes_madrid)) +
     geom_bar() +
-    theme(legend.position = "bottom") +
-    ggtitle("viajes_madrid") +
+    theme(legend.position = "none") +
+    ggtitle("Con que frecuencia viaja a Madrid") +
   scale_y_continuous(labels=scales::percent) 
-viajes_madrid_g
+ 
+viajes_madrid_g + theme(legend.position = "none",
+                     axis.text.x = element_text(angle = 45, hjust = 1)) +
+  ylab("") +
+  xlab("")
+
 # grafico de barras (%) frecuencia_gente_mad 
 
 frecuencia_gente_mad_g <- madrileños %>%
@@ -187,12 +228,15 @@ frecuencia_gente_mad_g <- madrileños %>%
   ggplot(aes(frecuencia_gente_mad, fill = frecuencia_gente_mad)) +
   geom_bar() +
   theme(legend.position = "bottom") +
-  ggtitle("frecuencia_gente_mad") +
+  ggtitle("Con que frecuencia tiene contacto con gente de Madrid") +
   scale_y_continuous(labels=scales::percent) 
-frecuencia_gente_mad_g
+  frecuencia_gente_mad_g + theme(legend.position = "none",
+                                 axis.text.x = element_text(angle = 45, hjust = 1)) +
+  ylab("") +
+  xlab("")
   
 # Grafico de barras con el % apilado si/no informa_esp miembro_aso manifestaciones reuniones (quitando ns/nc en los que queda) 
-  ##Aqui no tengo claro si es esto lo que tenías en mente
+  ##Aqui no tengo claro si es esto lo que tenías en mente ((REVISAR))
 
 informa_esp_aso_g <- madrileños %>%
   filter(!is.na(informa_esp),
@@ -202,7 +246,10 @@ informa_esp_aso_g <- madrileños %>%
   theme(legend.position = "bottom") +
   ggtitle("informa_esp_aso_g") +
   scale_y_continuous(labels=scales::percent) 
-informa_esp_aso_g
+  informa_esp_aso_g + theme(legend.position = "bottom",
+                            axis.text.x = element_text(angle = 45, hjust = 1)) +
+  ylab("") +
+  xlab("")
 
 informa_esp_mani_g <- madrileños %>%
   filter(!is.na(informa_esp),
@@ -232,9 +279,12 @@ elecciones_generales_esp_g <- madrileños %>%
   ggplot(aes(elecciones_generales_esp, fill = elecciones_generales_esp)) +
   geom_bar() +
   theme(legend.position = "bottom") +
-  ggtitle("elecciones_generales_esp") + 
+  ggtitle("Ha participado en las Elecciones generales de España en noviembre 2019") + 
   scale_y_continuous(labels=scales::percent) 
-elecciones_generales_esp_g
+elecciones_generales_esp_g + theme(legend.position = "none",
+                                      axis.text.x = element_text(angle = 45, hjust = 1)) +
+  ylab("") +
+  xlab("")
 
 # grafico de barras (%) elecciones_autonomicas_esp 
 elecciones_autonomicas_esp_g <- madrileños %>%
@@ -242,9 +292,12 @@ elecciones_autonomicas_esp_g <- madrileños %>%
   ggplot(aes(elecciones_autonomicas_esp, fill = elecciones_autonomicas_esp)) +
   geom_bar() +
   theme(legend.position = "bottom") +
-  ggtitle("elecciones_autonomicas_esp") +
+  ggtitle("Ha participado en las Elecciones autonómicas de Madrid en mayo 2019") +
   scale_y_continuous(labels=scales::percent) 
-elecciones_autonomicas_esp_g
+elecciones_autonomicas_esp_g  + theme(legend.position = "none",
+                                        axis.text.x = element_text(angle = 45, hjust = 1)) +
+  ylab("") +
+  xlab("")
 
 # grafico de barras (%) elecciones_municipales_esp 
 elecciones_municipales_esp_g <- madrileños %>%
@@ -252,9 +305,12 @@ elecciones_municipales_esp_g <- madrileños %>%
   ggplot(aes(elecciones_municipales_esp, fill = elecciones_municipales_esp)) +
   geom_bar() +
   theme(legend.position = "bottom") +
-  ggtitle("elecciones_municipales_esp") +
+  ggtitle("Ha participado en las Elecciones municipales de España en mayo del 2019") +
   scale_y_continuous(labels=scales::percent) 
-elecciones_municipales_esp_g
+elecciones_municipales_esp_g  + theme(legend.position = "none",
+                                      axis.text.x = element_text(angle = 45, hjust = 1)) +
+  ylab("") +
+  xlab("")
 
 # grafico de barras (%) elecciones_municipales_reside 
 elecciones_municipales_reside_g <- madrileños %>%
@@ -262,9 +318,12 @@ elecciones_municipales_reside_g <- madrileños %>%
   ggplot(aes(elecciones_municipales_reside, fill = elecciones_municipales_reside)) +
   geom_bar() +
   theme(legend.position = "bottom") +
-  ggtitle("elecciones_municipales_reside") +
+  ggtitle("Ha participado en las Elecciones municipales del país en que reside") +
   scale_y_continuous(labels=scales::percent)
-elecciones_municipales_reside_g
+elecciones_municipales_reside_g +  + theme(legend.position = "none",
+                                           axis.text.x = element_text(angle = 45, hjust = 1)) +
+  ylab("") +
+  xlab("")
 
 # grafico de barras (%) elecciones_europeas_españoles 
 elecciones_europeas_españoles_g <- madrileños %>%
@@ -272,9 +331,12 @@ elecciones_europeas_españoles_g <- madrileños %>%
   ggplot(aes(elecciones_europeas_españoles, fill = elecciones_europeas_españoles)) +
   geom_bar() +
   theme(legend.position = "bottom") +
-  ggtitle("elecciones_europeas_españoles") +
+  ggtitle("Ha participado en las Elecciones europeas de mayo 2019 - voto a candidatos españoles") +
   scale_y_continuous(labels=scales::percent)
-elecciones_europeas_españoles_g
+elecciones_europeas_españoles_g + theme(legend.position = "none",
+                                        axis.text.x = element_text(angle = 45, hjust = 1)) +
+  ylab("") +
+  xlab("")
 
 # grafico de barras (%) elecciones_europeas_extranjeros
 elecciones_europeas_extranjeros_g <- madrileños %>%
@@ -282,9 +344,13 @@ elecciones_europeas_extranjeros_g <- madrileños %>%
   ggplot(aes(elecciones_europeas_extranjeros, fill = elecciones_europeas_extranjeros)) +
   geom_bar() +
   theme(legend.position = "bottom") +
-  ggtitle("elecciones_europeas_extranjeros") +
+  ggtitle("Ha participado en las Elecciones europeas de mayo 2019 - voto a candidatos del país en
+el que reside") +
   scale_y_continuous(labels=scales::percent)
-elecciones_europeas_extranjeros_g
+elecciones_europeas_extranjeros_g + theme(legend.position = "none",
+                                           axis.text.x = element_text(angle = 45, hjust = 1)) +
+  ylab("") +
+  xlab("")
 
 # Grafico de barras con el % apilado con las 4 categorias para conoce_bolsa conoce_ayudas conoce_asociaciones conoce_consejo conoce_portal conoce_info_salud conoce_info_padron
 
@@ -293,61 +359,79 @@ conoce_bolsa_g <- madrileños %>%
   ggplot(aes(conoce_bolsa, fill = conoce_bolsa)) +
   geom_bar() +
   theme(legend.position = "bottom") +
-  ggtitle("conoce_bolsa") +
+  ggtitle("Conoce la Bolsa de empleo de la Administración Regional madrileña") +
   scale_y_continuous(labels=scales::percent) 
-conoce_bolsa_g
+conoce_bolsa_g + theme(legend.position = "none",
+                         axis.text.x = element_text(angle = 45, hjust = 1)) +
+  ylab("") +
+  xlab("")
 
 conoce_ayudas_g <- madrileños %>%
   filter(!is.na(conoce_ayudas)) %>%
   ggplot(aes(conoce_ayudas, fill = conoce_ayudas)) +
   geom_bar() +
   theme(legend.position = "bottom") +
-  ggtitle("conoce_ayudas") +
+  ggtitle("Conoce las ayudas para emprendedores de la Administración Regional madrileña") +
   scale_y_continuous(labels=scales::percent)
-conoce_ayudas_g
+conoce_ayudas_g + theme(legend.position = "none",
+                       axis.text.x = element_text(angle = 45, hjust = 1)) +
+  ylab("") +
+  xlab("")
 
 conoce_asociaciones_g <- madrileños %>%
   filter(!is.na(conoce_asociaciones)) %>%
   ggplot(aes(conoce_asociaciones, fill = conoce_asociaciones)) +
   geom_bar() +
   theme(legend.position = "bottom") +
-  ggtitle("conoce_asociaciones") +
+  ggtitle("Conoce las asociaciones y centros de madrileños en el extranjero") +
   scale_y_continuous(labels=scales::percent)
-conoce_asociaciones_g
+conoce_asociaciones_g + theme(legend.position = "none",
+                               axis.text.x = element_text(angle = 45, hjust = 1)) +
+  ylab("") +
+  xlab("")
 
 conoce_consejo_g <- madrileños %>%
   filter(!is.na(conoce_consejo)) %>%
   ggplot(aes(conoce_consejo, fill = conoce_consejo)) +
   geom_bar() +
   theme(legend.position = "bottom") +
-  ggtitle("conoce_consejo") +
+  ggtitle("Conoce el Consejo de madrileños en el extranjero") +
   scale_y_continuous(labels=scales::percent)
-conoce_consejo_g
+conoce_consejo_g + theme(legend.position = "none",
+                         axis.text.x = element_text(angle = 45, hjust = 1)) +
+  ylab("") +
+  xlab("")
 
 conoce_portal_g <- madrileños %>%
   filter(!is.na(conoce_portal)) %>%
   ggplot(aes(conoce_portal, fill = conoce_portal)) +
   geom_bar() +
   theme(legend.position = "bottom") +
-  ggtitle("conoce_portal") +
+  ggtitle("Conoce el Portal de emigración de la Administración Regional madrileña") +
   scale_y_continuous(labels=scales::percent)
-conoce_portal_g
+conoce_portal_g + theme(legend.position = "none",
+                       axis.text.x = element_text(angle = 45, hjust = 1)) +
+  ylab("") +
+  xlab("")
 
 conoce_info_salud_g <- madrileños %>%
   filter(!is.na(conoce_bolsa)) %>%
   ggplot(aes(conoce_info_salud, fill = conoce_info_salud)) +
   geom_bar() +
   theme(legend.position = "bottom") +
-  ggtitle("conoce_info_salud") +
+  ggtitle("Conoce  el servicio de información oficial sobre salud en Madrid") +
   scale_y_continuous(labels=scales::percent)
-conoce_info_salud_g
+conoce_info_salud_g + theme(legend.position = "none",
+                            axis.text.x = element_text(angle = 45, hjust = 1)) +
+  ylab("") +
+  xlab("")
 
 conoce_info_padron_g <- madrileños %>%
   filter(!is.na(conoce_info_padron)) %>%
   ggplot(aes(conoce_info_padron, fill = conoce_info_padron)) +
   geom_bar() +
   theme(legend.position = "bottom") +
-  ggtitle("conoce_info_padron") + 
+  ggtitle("Conoce el servicio de información oficial sobre el empadronamiento en Madrid") + 
   scale_y_continuous(labels=scales::percent)
 conoce_info_padron_g
 
@@ -359,7 +443,10 @@ registrado_consulado_g <- madrileños %>%
   theme(legend.position = "bottom") +
   ggtitle("registrado_consulado") +
   scale_y_continuous(labels=scales::percent)
-registrado_consulado_g
+registrado_consulado_g + theme(legend.position = "none",
+                                 axis.text.x = element_text(angle = 45, hjust = 1)) +
+  ylab("") +
+  xlab("")
 
 # Grafico de barras con el % apilado si/no registro_votar registro_documentacion registro_contacto registro_prevencion registro_certificado registro_franquicia registro_transacciones registro_iva
 
@@ -368,11 +455,14 @@ motivo_registro_g <- madrileños %>%
   ggplot(aes(motivo_registro, fill = motivo_registro)) +
   geom_bar() +
   theme(legend.position = "bottom") +
-  ggtitle("motivo_registro") +
+  ggtitle("¿Por qué ha registrado su residencia en el consulado español?") +
   scale_y_continuous(labels=scales::percent)
-motivo_registro_g
+motivo_registro_g + theme(legend.position = "none",
+                             axis.text.x = element_text(angle = 45, hjust = 1)) +
+  ylab("") +
+  xlab("")
 
-    registro_votar_g <- madrileños %>%
+    "registro_votar_g <- madrileños %>%
       filter(!is.na(registro_votar)) %>%
       ggplot(aes(registro_votar, fill = registro_votar)) +
       geom_bar() +
@@ -442,7 +532,7 @@ motivo_registro_g
       theme(legend.position = "bottom") +
       ggtitle("registro_iva") +
       scale_y_continuous(labels=scales::percent)
-    registro_iva_g
+    registro_iva_g"
 
 # Grafico de barras con el % apilado si/no no_registro_conocia no_registro_sabia no_registro_tramites no_registro_padron no_registro_covid no_registro_admin no_registro_aporta
 motivo_no_registro_g  <- madrileños %>%
@@ -450,9 +540,13 @@ motivo_no_registro_g  <- madrileños %>%
   ggplot(aes(motivo_no_registro, fill = motivo_no_registro)) +
   geom_bar() +
   theme(legend.position = "bottom") +
-  ggtitle("motivo_no_registro") +
+  ggtitle("¿Por qué no ha registrado su residencia en el consulado español?") +
   scale_y_continuous(labels=scales::percent)
-motivo_no_registro_g
+motivo_no_registro_g + theme(legend.position = "none",
+                             axis.text.x = element_text(angle = 45, hjust = 1)) +
+  ylab("") +
+  xlab("")
+
 
 
 # Grafico de barras con % prob_trabajo
@@ -461,10 +555,14 @@ prob_trabajo_g <- madrileños %>%
   ggplot(aes(prob_trabajo, fill = prob_trabajo)) +
   geom_bar() +
   theme(legend.position = "bottom") +
-  ggtitle("prob_trabajo") + 
+  ggtitle("En el caso de su hipotética vuelta a Madrid, ¿piensa que sería muy
+probable, bastante, poco o nada probable que tras su vuelta
+encontrara trabajo en un plazo de doce meses?") + 
   scale_y_continuous(labels=scales::percent)
-prob_trabajo_g
-
+prob_trabajo_g  + theme(legend.position = "none",
+                        axis.text.x = element_text(angle = 45, hjust = 1)) +
+  ylab("") +
+  xlab("")
 
 # Grafico de barras con % apilado de categorias emprender_habilidades emprender_experiencia emprender_conocido emprender_oportunidades emprender_fracaso emprender_idea emprender_capital emprender_impuestos emprender_apoyo emprender_innovador
 emprender_habilidades_g <- madrileños %>%
@@ -472,92 +570,126 @@ emprender_habilidades_g <- madrileños %>%
   ggplot(aes(emprender_habilidades, fill = emprender_habilidades)) +
   geom_bar() +
   theme(legend.position = "bottom") +
-  ggtitle("emprender_habilidades") + 
+  ggtitle("En relación con las posibilidades de emprender un negocio, considera que tiene las habilidades y conocimientos necesarios") + 
   scale_y_continuous(labels=scales::percent)
-emprender_habilidades_g
+emprender_habilidades_g + theme(legend.position = "none") +
+  ylab("") +
+  xlab("")
 
 emprender_experiencia_g <- madrileños %>%
   filter(!is.na(emprender_experiencia)) %>%
   ggplot(aes(emprender_experiencia, fill = emprender_experiencia)) +
   geom_bar() +
   theme(legend.position = "bottom") +
-  ggtitle("emprender_experiencia") + 
+  ggtitle("En relación con las posibilidades de emprender un negocio, considera que tiene experiencia ") + 
   scale_y_continuous(labels=scales::percent)
-emprender_experiencia_g
+emprender_experiencia_g + theme(legend.position = "none") +
+  ylab("") +
+  xlab("")
 
 emprender_conocido_g <- madrileños %>%
   filter(!is.na(emprender_conocido)) %>%
   ggplot(aes(estado_civil, fill = emprender_conocido)) +
   geom_bar() +
   theme(legend.position = "bottom") +
-  ggtitle("emprender_conocido") + 
+  ggtitle("En relación con las posibilidades de emprender un negocio, considera que conoce a alguien que ha montado un negocio en los
+últimos dos años") + 
   scale_y_continuous(labels=scales::percent)
-emprender_conocido_g
+emprender_conocido_g + theme(legend.position = "none") +
+  ylab("") +
+  xlab("")
 
 emprender_oportunidades_g <- madrileños %>%
   filter(!is.na(emprender_oportunidades)) %>%
   ggplot(aes(emprender_oportunidades, fill = emprender_oportunidades)) +
   geom_bar() +
   theme(legend.position = "bottom") +
-  ggtitle("emprender_oportunidades") + 
+  ggtitle("En relación con las posibilidades de emprender un negocio, considera que observa buenas oportunidades para montar un negocio
+en los próximos seis meses en el área donde vive ") + 
   scale_y_continuous(labels=scales::percent)
-emprender_oportunidades_g
+emprender_oportunidades_g + theme(legend.position = "none") +
+  ylab("") +
+  xlab("")
 
 emprender_fracaso_g <- madrileños %>%
   filter(!is.na(emprender_fracaso)) %>%
   ggplot(aes(emprender_fracaso, fill = emprender_fracaso)) +
   geom_bar() +
   theme(legend.position = "bottom") +
-  ggtitle("emprender_fracaso") + 
+  ggtitle("En relación con las posibilidades de emprender un negocio, considera que descartó la idea de montar un negocio debido al miedo al fracaso") + 
   scale_y_continuous(labels=scales::percent)
-emprender_fracaso_g
+emprender_fracaso_g + theme(legend.position = "none") +
+  ylab("") +
+  xlab("")
 
 emprender_idea_g <- madrileños %>%
   filter(!is.na(emprender_idea)) %>%
   ggplot(aes(emprender_idea, fill = emprender_idea)) +
   geom_bar() +
   theme(legend.position = "bottom") +
-  ggtitle("emprender_idea") + 
+  ggtitle("En relación con las posibilidades de emprender un negocio, considera que tiene una idea ") + 
   scale_y_continuous(labels=scales::percent)
-emprender_idea_g
+emprender_idea_g  + theme(legend.position = "none") +
+  ylab("") +
+  xlab("")
+
 
 emprender_capital_g <- madrileños %>%
   filter(!is.na(emprender_capital)) %>%
   ggplot(aes(emprender_capital, fill = emprender_capital)) +
   geom_bar() +
   theme(legend.position = "bottom") +
-  ggtitle("emprender_capital") + 
+  ggtitle("En relación con las posibilidades de emprender un negocio, considera que tengo capital/recursos financieros") + 
   scale_y_continuous(labels=scales::percent)
-emprender_capital_g
+emprender_capital_g  + theme(legend.position = "none") +
+  ylab("") +
+  xlab("")
 
 emprender_impuestos_g <- madrileños %>%
   filter(!is.na(emprender_impuestos)) %>%
   ggplot(aes(emprender_impuestos, fill = emprender_impuestos)) +
   geom_bar() +
   theme(legend.position = "bottom") +
-  ggtitle("emprender_impuestos") + 
+  ggtitle("En relación con las posibilidades de emprender un negocio, considera que los impuestos son demasiado altos") + 
   scale_y_continuous(labels=scales::percent)
-emprender_impuestos_g
+emprender_impuestos_g  + theme(legend.position = "none") +
+  ylab("") +
+  xlab("")
 
 emprender_apoyo_g <- madrileños %>%
   filter(!is.na(emprender_apoyo)) %>%
   ggplot(aes(emprender_apoyo, fill = emprender_apoyo)) +
   geom_bar() +
   theme(legend.position = "bottom") +
-  ggtitle("emprender_apoyo") + 
+  ggtitle("En relación con las posibilidades de emprender un negocio, considera que falta apoyo o programas públicos, o de las instituciones
+locales en el área donde vivo") + 
   scale_y_continuous(labels=scales::percent)
-emprender_apoyo_g
+emprender_apoyo_g  + theme(legend.position = "none") +
+  ylab("") +
+  xlab("")
 
 emprender_innovador_g <- madrileños %>%
   filter(!is.na(emprender_innovador)) %>%
   ggplot(aes(emprender_innovador, fill = emprender_innovador)) +
   geom_bar() +
   theme(legend.position = "bottom") +
-  ggtitle("emprender_innovador") + 
+  ggtitle("En relación con las posibilidades de emprender un negocio, considera que tengo un proyecto innovador que he aprendido / extraido
+de mi experiencia en el exterior") + 
   scale_y_continuous(labels=scales::percent)
-emprender_innovador_g
+emprender_innovador_g  + theme(legend.position = "none") +
+  ylab("") +
+  xlab("")
 
 # Pie chart % genero
+genero_g <- madrileños %>%
+  filter(!is.na(genero)) %>%
+  ggplot(aes(genero, fill = genero)) +
+  geom_bar() +
+  theme(legend.position = "none") +
+  ggtitle("¿Cuál es su género?") + 
+  scale_y_continuous(labels=scales::percent)
+genero_g +  ylab("") +
+  xlab("")
 
 # Grafico de barras con  % estado_civil
 
@@ -566,9 +698,11 @@ estado_civil_g <- madrileños %>%
   ggplot(aes(estado_civil, fill = estado_civil)) +
   geom_bar() +
   theme(legend.position = "bottom") +
-  ggtitle("estado_civil") + 
+  ggtitle("¿Cuál es su estado civil?") + 
   scale_y_continuous(labels=scales::percent)
-estado_civil_g
+estado_civil_g + theme(legend.position = "none") +
+  ylab("") +
+  xlab("")
 
 # Grafico de barras con  % vive_solo
 
@@ -577,9 +711,12 @@ vive_solo_g <- madrileños %>%
   ggplot(aes(vive_solo, fill = vive_solo)) +
   geom_bar() +
   theme(legend.position = "bottom") +
-  ggtitle("vive_solo") + 
+  ggtitle("¿Vive con algún adulto más o vive sólo?") + 
   scale_y_continuous(labels=scales::percent)
-vive_solo_g
+vive_solo_g  + theme(legend.position = "none",
+                     axis.text.x = element_text(angle = 45, hjust = 1)) +
+  ylab("") +
+  xlab("")
 
 # Grafico de barras con  % hijos
 hijos_g <- madrileños %>%
@@ -587,11 +724,24 @@ hijos_g <- madrileños %>%
   ggplot(aes(hijos, fill = hijos)) +
   geom_bar() +
   theme(legend.position = "bottom") +
-  ggtitle("hijos") + 
+  ggtitle("¿Tiene hijos?") + 
   scale_y_continuous(labels=scales::percent)
-hijos_g
-
+hijos_g + theme(legend.position = "none",
+                  axis.text.x = element_text(angle = 45, hjust = 1)) +
+  ylab("") +
+  xlab("")
 # Grafico de barras con  % tamaño_municipio
+tamaño_municipio_g <- madrileños %>%
+  filter(!is.na(tamaño_municipio)) %>%
+  ggplot(aes(tamaño_municipio, fill = tamaño_municipio)) +
+  geom_bar() +
+  theme(legend.position = "none") +
+  ggtitle("Tamaño en el municipio en el que vive actualmente") + 
+  scale_y_continuous(labels=scales::percent)
+tamaño_municipio_g + theme(legend.position = "none",
+                axis.text.x = element_text(angle = 45, hjust = 1)) +
+  ylab("") +
+  xlab("")
 
 # codigo_postal  queda por recodificar y hacer un grafico   ********
   
@@ -605,7 +755,7 @@ educacion_g <- madrileños %>%
   scale_x_discrete(labels = c("Primaria", "Secundaria", "Bachillerato", "Formación profesional", "Grado universitario", "Postgrado", "Doctorado")) +
   ylab("") +
   xlab("") +
-  ggtitle("Nivel educativo")+ 
+  ggtitle("¿Cuál es su nivel de estudios terminados?")+ 
   scale_y_continuous(labels=scales::percent)
 educacion_g
 
@@ -617,9 +767,12 @@ tipo_contrato_g <- madrileños %>%
   ggplot(aes(tipo_contrato, fill = tipo_contrato)) +
   geom_bar() +
   theme(legend.position = "bottom") +
-  ggtitle("tipo_contrato") +
+  ggtitle("¿Qué tipo de contrato tiene?") +
   scale_y_continuous(labels=scales::percent)
-educacion_g
+tipo_contrato_g + theme(legend.position = "none",
+                        axis.text.x = element_text(angle = 45, hjust = 1)) +
+  ylab("") +
+  xlab("")
 
 # Grafico de barras con  % dedicacion
 dedicacion_g <- madrileños %>%
@@ -627,9 +780,12 @@ dedicacion_g <- madrileños %>%
   ggplot(aes(dedicacion, fill = dedicacion)) +
   geom_bar() +
   theme(legend.position = "bottom") +
-  ggtitle("dedicacion") + 
+  ggtitle("¿Con qué dedicación?") + 
   scale_y_continuous(labels=scales::percent)
-dedicacion_g
+dedicacion_g + theme(legend.position = "none",
+                     axis.text.x = element_text(angle = 45, hjust = 1)) +
+  ylab("") +
+  xlab("")
 
 # Grafico de barras con  % salario
 salario_g <- madrileños %>%
@@ -637,20 +793,21 @@ salario_g <- madrileños %>%
   ggplot(aes(salario, fill = salario)) +
   geom_bar() +
   theme(legend.position = "bottom") +
-  ggtitle("salario") + 
+  ggtitle("Salario neto que percibe al mes") + 
   scale_y_continuous(labels=scales::percent)
-salario_g
-
-
+salario_g + theme(legend.position = "none",
+                  axis.text.x = element_text(angle = 45, hjust = 1)) +
+  ylab("") +
+  xlab("")
 
 # Obtener el directorio temporal de los gráficos
 plots.dir.path <- list.files(tempdir(), pattern="rs-graphics", full.names = TRUE); 
 plots.png.paths <- list.files(plots.dir.path, pattern=".png", full.names = TRUE)
 
   # Copiar en directorio de destino
-  file.copy(from=plots.png.paths, to="C:/Users/Petazetas/Desktop/Madrileños por el mundo/Gráficos")
+  file.copy(from=plots.png.paths, to="C:/Users/Petazetas/Desktop/Madrileños por el mundo")
   
-
+  C:\Users\Petazetas\Desktop\Madrileños por el mundo
 
 
 
