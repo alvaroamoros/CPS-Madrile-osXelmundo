@@ -31,8 +31,16 @@ edad_intervalos_g <- madrileños %>%
   ylab("") +
   xlab("") +
   ggtitle("Edad")  + 
-  scale_y_continuous(labels=scales::percent)
-edad_intervalos_g + ggsave("edad_intervalos_g.png")
+  scale_y_continuous(labels = scales::percent, 
+                     limits = c(0,1000))
+edad_intervalos_g 
+edad_intervalos_g ggsave("edad_intervalos_g.png")
+
+
+scale_y_continuous(breaks = seq(0, 1.2, 0.2)) + 
+  coord_cartesian(ylim = c(0, 1.2))
+
+
 
 #Grafico de barras (en %) de años_fuera_intervalo  // Ojo recodificado! mira arriba
 años_fuera_intervalo_g <- madrileños %>%
