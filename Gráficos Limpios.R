@@ -14,56 +14,74 @@ library(ggthemes)
 library(haven)
 library(ggrepel)
 library(scales)
+library(RColorBrewer)
+library(viridis) 
+library(comma_format)
 
+display.brewer.all()
 
-madrileños <- read_dta("MadxMundo + libres + recode.dta")
+madrileños <- read_dta("MAdxMundo + Libres + Actualizado intervalos fuera.dta")
 madrileños <- as_factor(madrileños)
+
+
+comma2 <- function(x, ...) {
+  format(x, decimal.mark = ",", trim = TRUE, scientific = FALSE, ...)
+}
+
+edad_intervalos_g + scale_y_continuous(formatter=comma2)
+
+point <- format_format(big.mark = ".", decimal.mark = ",", scientific = FALSE)
+
+
+
+
 
 
 #Edad en intervalos
 edad_intervalos_g <- madrileños %>%
   filter(!is.na(edad_intervalos)) %>%
-  ggplot(aes(edad_intervalos, fill = edad_intervalos)) +
-  geom_bar(aes(y = (..count..)/sum(..count..), fill=factor(..x..)), stat= "count") +
-  geom_text(aes(label = scales::percent((..count..)/sum(..count..)),
+  ggplot(aes(edad_intervalos)) +
+  geom_bar(aes(y = (..count..)/sum(..count..), fill=factor(..x..)), stat= "count",  fill="paleturquoise3") +
+  geom_text(aes(label = scales::percent((..count..)/sum(..count..), accuracy = 1),
                 y= ((..count..)/sum(..count..))), stat="count",
             hjust = 0.5, size = 3, vjust= -1,
             inherit.aes = TRUE) +
-  scale_y_continuous(labels=scales::percent) + 
-  theme_excel_new() +
+  scale_y_continuous(labels=scales::percent) +
+  theme_hc() +
   theme(legend.position = "none",
         axis.text=element_text(size=10)) +
   ylab("") +
   xlab("") 
 
-edad_intervalos_g + ggsave("edad_intervalos_g.png")
+edad_intervalos_g + scale_y_continuous(labels = comma_format(big.mark = ".",
+                                                             decimal.mark = ","))
 
 
 #Años fuera de España en intervalos
 años_fuera_intervalo_g <- madrileños %>%
   filter(!is.na(años_fuera_intervalo)) %>%
-  ggplot(aes(años_fuera_intervalo, fill = años_fuera_intervalo)) +
-  geom_bar(aes(y = (..count..)/sum(..count..), fill=factor(..x..)), stat= "count") +
+  ggplot(aes(años_fuera_intervalo)) +
+  geom_bar(aes(y = (..count..)/sum(..count..), fill=factor(..x..)), stat= "count", fill = "paleturquoise3") +
   geom_text(aes(label = scales::percent((..count..)/sum(..count..)),
                 y= ((..count..)/sum(..count..))), stat="count",
-            hjust = 0.5, size = 3, vjust= -1,
+            hjust = 0.5, size = 3, vjust= -0.5,
             inherit.aes = TRUE) +
   scale_y_continuous(labels=scales::percent) + 
-  theme_excel_new() +
+  theme_hc() +
   theme(legend.position = "none",
         axis.title=element_text(size=10, face="bold")) +
   ylab("") +
   xlab("") + 
   scale_x_discrete(labels = c("< 1","1-2","2-3","3-4","4-5","5-10","10-15","15-20","+20")) 
 
-años_fuera_intervalo_g + ggsave("años_fuera_intervalo_g.png")
+años_fuera_intervalo_g 
 
 
 # Nacionalidad española
 nacionalidad_g <- madrileños %>%
   filter(!is.na(nacionalidad)) %>%
   ggplot(aes(nacionalidad, fill = nacionalidad)) +
-  geom_bar(aes(y = (..count..)/sum(..count..), fill=factor(..x..)), stat= "count") +
+  geom_bar(aes(y = (..count..)/sum(..count..), fill=factor(..x..)), stat= "count", fill = "paleturquoise3") +
   geom_text(aes(label = scales::percent((..count..)/sum(..count..)),
                 y= ((..count..)/sum(..count..))), stat="count",
             hjust = 0.5, size = 3, vjust= -1,
@@ -77,14 +95,13 @@ nacionalidad_g <- madrileños %>%
   ylab("") +
   scale_x_discrete(labels = c("si","no")) 
 
-nacionalidad_g + ggsave("nacionalidad_g.png")
-
+nacionalidad_g + scale_fill_brewer(palette = "YlGnBu")
 
 # Había estado anteriormente en su país de residencia
 antes_pais_g <- madrileños %>%
   filter(!is.na(antes_pais)) %>%
   ggplot(aes(antes_pais, fill = antes_pais)) +
-  geom_bar(aes(y = (..count..)/sum(..count..), fill=factor(..x..)), stat= "count") +
+  geom_bar(aes(y = (..count..)/sum(..count..), fill=factor(..x..)), stat= "count", fill = "paleturquoise3") +
   geom_text(aes(label = scales::percent((..count..)/sum(..count..)),
                 y= ((..count..)/sum(..count..))), stat="count",
             hjust = 0.5, size = 3, vjust= -1,
@@ -99,7 +116,7 @@ antes_pais_g <- madrileños %>%
   ylab("") +
   xlab("")
 
-antes_pais_g + ggsave("antes_pais_g.png")
+antes_pais_g + scale_fill_brewer(palette = "YlGnBu") + ggsave("antes_pais_g.png")
 
 
 
@@ -333,66 +350,85 @@ frecuencia_gente_mad_g + ggsave("frecuencia_gente_mad_g.png")
 # Grafico de barras con el % apilado si/no informa_esp miembro_aso manifestaciones reuniones (quitando ns/nc en los que queda) 
 #####Faltan Porcentajes##########
 
-miembro_aso_g <- madrileños %>%
-  filter(!is.na(informa_esp),
-         !is.na(miembro_aso)) %>%
-  ggplot(aes(informa_esp, fill = miembro_aso)) +
-  geom_bar(position = position_dodge()) +
-  theme(legend.position = "none",
-        axis.text=element_text(size=10),
-        axis.title=element_text(size=10,face="bold")) +
-  theme(plot.title = element_text(size = 10, face = "bold")) +
-  labs(fill = "¿Es miembro de alguna asociación relacionada
-                con España/Madrid el país donde reside?") +
-  ggtitle("¿Con qué frecuencia se informa sobre 
-           la actualidad en España?") +
+informa_esp_g <- madrileños %>%
+  filter(!is.na(informa_esp)) %>%
+  ggplot(aes(informa_esp, fill = informa_esp)) +
+  geom_bar(aes(y = (..count..)/sum(..count..), fill=factor(..x..)), stat= "count", fill = "paleturquoise3" ) +
+  geom_text(aes(label = scales::percent((..count..)/sum(..count..)),
+                y= ((..count..)/sum(..count..))), stat="count",
+            hjust = 0.5, size = 3, vjust= -0.3,
+            inherit.aes = TRUE) +
   scale_y_continuous(labels=scales::percent) +
-  xlab("") +
-  ylab("")
+  theme_hc() + theme(legend.position = "none",
+                            axis.text=element_text(size=10),
+                            axis.title=element_text(size=10,face="bold"),
+                            plot.title = element_text(size = 10, face = "bold"),
+                            axis.text.x = element_text(angle = 45, hjust = 1)) +
+  ylab("") +
+  xlab("")
+  
+informa_esp_g + ggsave("informa_esp_g.png")
+
+
+miembro_aso_g <- madrileños %>%
+  filter(!is.na(miembro_aso)) %>%
+  filter(miembro_aso %in% c("Sí","No")) %>%
+  ggplot(aes(miembro_aso, fill = miembro_aso)) +
+  geom_bar(aes(y = (..count..)/sum(..count..), fill=factor(..x..)), stat= "count", fill = "paleturquoise3" ) +
+  geom_text(aes(label = scales::percent((..count..)/sum(..count..)),
+                y= ((..count..)/sum(..count..))), stat="count",
+            hjust = 0.5, size = 3, vjust= -0.3,
+            inherit.aes = TRUE) +
+  scale_y_continuous(labels=scales::percent) +
+  theme_hc() + theme(legend.position = "none",
+                     axis.text=element_text(size=10),
+                     axis.title=element_text(size=10,face="bold"),
+                     plot.title = element_text(size = 10, face = "bold"),
+                     axis.text.x = element_text(angle = 45, hjust = 1)) +
+  ylab("") +
+  xlab("")
+
 miembro_aso_g + ggsave("miembro_aso_g.png")
 
 manifestaciones_g <- madrileños %>%
-  filter(!is.na(informa_esp),
-         !is.na(manifestaciones)) %>%
-  filter(manifestaciones %in% c("Sí", "No")) %>%
-  ggplot(aes(informa_esp, fill = manifestaciones)) +
-  geom_bar(position = position_dodge()) +
-  theme(legend.position = "bottom",
-        axis.text.x = element_text(angle = 45, hjust = 1)) +
-  theme(legend.position = "none",
-        axis.text=element_text(size=10),
-        axis.title=element_text(size=10,face="bold")) +
-  theme(plot.title = element_text(size = 10, face = "bold")) +
-  labs(fill = "Participa en manifestaciones relacionadas
-              con España / Madrid en el país donde reside?") +
-  ggtitle("¿Con qué frecuencia se informa sobre 
-           la actualidad en España?") +
+  filter(!is.na(manifestaciones)) %>%
+  filter(manifestaciones %in% c("Sí","No")) %>%
+  ggplot(aes(manifestaciones, fill = manifestaciones)) +
+  geom_bar(aes(y = (..count..)/sum(..count..), fill=factor(..x..)), stat= "count", fill = "paleturquoise3" ) +
+  geom_text(aes(label = scales::percent((..count..)/sum(..count..)),
+                y= ((..count..)/sum(..count..))), stat="count",
+            hjust = 0.5, size = 3, vjust= -0.3,
+            inherit.aes = TRUE) +
   scale_y_continuous(labels=scales::percent) +
-  xlab("") +
-  ylab("")
-manifestaciones_g + ggsave("manifestaciones.png")
+  theme_hc() + theme(legend.position = "none",
+                     axis.text=element_text(size=10),
+                     axis.title=element_text(size=10,face="bold"),
+                     plot.title = element_text(size = 10, face = "bold"),
+                     axis.text.x = element_text(angle = 45, hjust = 1)) +
+  ylab("") +
+  xlab("")
 
+manifestaciones_g + ggsave("manifestaciones_g.png")
 
 reuniones_g <- madrileños %>%
-  filter(!is.na(informa_esp),
-         !is.na(reuniones)) %>%
-  filter(reuniones %in% c("Sí", "No" )) %>%
-  ggplot(aes(informa_esp, fill = reuniones)) +
-  geom_bar(position = position_dodge()) +
-  theme(legend.position = "bottom",
-        axis.text.x = element_text(angle = 45, hjust = 1)) +
-  theme(legend.position = "none",
-        axis.text=element_text(size=10),
-        axis.title=element_text(size=10,face="bold")) +
-  theme(plot.title = element_text(size = 10, face = "bold")) +
-  labs(fill = "¿Asiste a reuniones/fiestas con gran número de Españoles?") +
-  ggtitle("¿Con qué frecuencia se informa sobre la actualidad
-          en España?") +
+  filter(!is.na(reuniones)) %>%
+  filter(reuniones %in% c("Sí","No")) %>%
+  ggplot(aes(reuniones, fill = reuniones)) +
+  geom_bar(aes(y = (..count..)/sum(..count..), fill=factor(..x..)), stat= "count", fill = "paleturquoise3" ) +
+  geom_text(aes(label = scales::percent((..count..)/sum(..count..)),
+                y= ((..count..)/sum(..count..))), stat="count",
+            hjust = 0.5, size = 3, vjust= -0.3,
+            inherit.aes = TRUE) +
   scale_y_continuous(labels=scales::percent) +
-  xlab("") +
-  ylab("")
-reuniones_g + ggsave("reuniones_g.png")
+  theme_hc() + theme(legend.position = "none",
+                     axis.text=element_text(size=10),
+                     axis.title=element_text(size=10,face="bold"),
+                     plot.title = element_text(size = 10, face = "bold"),
+                     axis.text.x = element_text(angle = 45, hjust = 1)) +
+  ylab("") +
+  xlab("")
 
+reuniones_g + ggsave("reuniones_g.png")
 
 
 # Ha participado en las Elecciones generalesde España de noviembre 2019?
@@ -662,7 +698,7 @@ motivo_registro_g <- madrileños %>%
   ylab("") +
   xlab("")
   
-motivo_registro_g + ggsave("motivo_registro_g.png")
+motivo_registro_g + ggsave("motivo_registro_g.png") 
 
 # Grafico de barras con el % apilado si/no no_registro_conocia no_registro_sabia no_registro_tramites no_registro_padron no_registro_covid no_registro_admin no_registro_aporta
 motivo_no_registro_g <- madrileños %>%
@@ -1065,6 +1101,5 @@ salario_g <- madrileños %>%
   ylab("") +
   xlab("")
 
-salario_g + ggsave("salario_g.png")
-
+salario_g +  ggsave("salario_g.png")
 

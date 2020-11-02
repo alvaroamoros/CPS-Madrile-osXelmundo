@@ -43,7 +43,8 @@ point <- format_format(big.mark = ".", decimal.mark = ",", scientific = FALSE)
 edad_intervalos_g <- madrileños %>%
   filter(!is.na(edad_intervalos)) %>%
   ggplot(aes(edad_intervalos)) +
-  geom_bar(aes(y = (..count..)/sum(..count..), fill=factor(..x..)), stat= "count",  fill="paleturquoise3") +
+  geom_bar(aes(y = (..count..)/sum(..count..), fill=factor(..x..)), stat= "count") +
+  scale_fill_brewer(palette="GnBu", aesthetics = "fill") +
   geom_text(aes(label = scales::percent((..count..)/sum(..count..), accuracy = 1),
                 y= ((..count..)/sum(..count..))), stat="count",
             hjust = 0.5, size = 3, vjust= -1,
@@ -81,8 +82,9 @@ años_fuera_intervalo_g + ggsave("años_fuera_intervalo_g.png")
 # Nacionalidad española
 nacionalidad_g <- madrileños %>%
   filter(!is.na(nacionalidad)) %>%
-  ggplot(aes(nacionalidad, fill = nacionalidad)) +
-  geom_bar(aes(y = (..count..)/sum(..count..), fill=factor(..x..)), stat= "count", fill = "paleturquoise3") +
+  ggplot(aes(nacionalidad)) +
+  geom_bar(aes(y = (..count..)/sum(..count..), fill=factor(..x..)), stat= "count") +
+  scale_fill_brewer(palette="GnBu", aesthetics = "fill") +
   geom_text(aes(label = scales::percent((..count..)/sum(..count..), accuracy = 1),
                 y= ((..count..)/sum(..count..))), stat="count",
             hjust = 0.5, size = 3, vjust= -1,
@@ -102,8 +104,8 @@ nacionalidad_g + ggsave("nacionalidad_g.png")
 antes_pais_g <- madrileños %>%
   filter(!is.na(antes_pais)) %>%
   ggplot(aes(antes_pais)) +
-  scale_fill_brewer(palette="GnBu", aesthetics = "fill", labels = c("Sí, de turismo", "Sí, motivos laborales", "Sí, visitando a familiares", "Sí, de erasmus",
-                                                                    "Sí, otra beca", "Sí, había vivido anteriormente", "No", "Otro") ) +
+  scale_fill_brewer(palette="GnBu", aesthetics = "fill", labels = c("De turismo", "Motivos laborales", "Visitando a familiares", "De erasmus",
+                                                                    "Otra beca", "Vivido anteriormente", "No", "Otro") ) +
   geom_bar(aes(y = (..count..)/sum(..count..), fill=factor(..x..)), stat= "count") +
   geom_text(aes(label = scales::percent((..count..)/sum(..count..), accuracy = 1),
                 y= ((..count..)/sum(..count..))), stat="count",
@@ -111,23 +113,23 @@ antes_pais_g <- madrileños %>%
             inherit.aes = TRUE) +
   scale_y_continuous(labels=scales::percent) +
   theme_hc() +
-  theme(legend.position = "right",
+  theme(legend.position = "bottom",
         legend.title = element_blank(),
         axis.text.x = element_blank(),
         axis.ticks.x=element_blank()) +
   ylab("") +
   xlab("")
 
-antes_pais_g + ggsave("antes_pais_g.png")
+antes_pais_g + guides(fill=guide_legend(nrow=3,byrow=TRUE, label.hjust = -0.1)) +ggsave("antes_pais_g.png")
 
 
-scale_fill_brewerscale_fill_brewer(palette = "YlGnBu")
 
 # Dificultades con el idioma en el país de destino
 dific_idioma_g <- madrileños %>%
   filter(!is.na(dific_idioma)) %>%
   ggplot(aes(dific_idioma, fill = dific_idioma)) +
-  geom_bar(aes(y = (..count..)/sum(..count..), fill=factor(..x..)), stat= "count", fill = "paleturquoise3") +
+  geom_bar(aes(y = (..count..)/sum(..count..), fill=factor(..x..)), stat= "count") +
+  scale_fill_brewer(palette="GnBu", aesthetics = "fill")+
   geom_text(aes(label = scales::percent((..count..)/sum(..count..), accuracy = 1),
                 y= ((..count..)/sum(..count..))), stat="count",
             hjust = 0.5, size = 3, vjust= -1,
@@ -169,7 +171,8 @@ dific_recursos_g + ggsave("dific_recursos_g.png")
 dific_idioma_g <- madrileños %>%
   filter(!is.na(dific_idioma)) %>%
   ggplot(aes(dific_idioma, fill = dific_idioma)) +
-  geom_bar(aes(y = (..count..)/sum(..count..), fill=factor(..x..)), stat= "count", fill = "paleturquoise3") +
+  geom_bar(aes(y = (..count..)/sum(..count..), fill=factor(..x..)), stat= "count") +
+  scale_fill_brewer(palette="GnBu", aesthetics = "fill") +
   geom_text(aes(label = scales::percent((..count..)/sum(..count..), accuracy = 1),
                 y= ((..count..)/sum(..count..))), stat="count",
             hjust = 0.5, size = 3, vjust= -1,
@@ -209,7 +212,8 @@ dific_alojamiento_g + ggsave("dific_alojamiento_g.png")
 dific_laborales_g <- madrileños %>%
   filter(!is.na(dific_laborales)) %>%
   ggplot(aes(dific_laborales, fill = dific_laborales)) +
-  geom_bar(aes(y = (..count..)/sum(..count..), fill=factor(..x..)), stat= "count", fill = "paleturquoise3") +
+  scale_fill_brewer(palette="GnBu", aesthetics = "fill") +
+  geom_bar(aes(y = (..count..)/sum(..count..), fill=factor(..x..)), stat= "count") +
   geom_text(aes(label = scales::percent((..count..)/sum(..count..), accuracy = 1),
                 y= ((..count..)/sum(..count..))), stat="count",
             hjust = 0.5, size = 3, vjust= -1,
@@ -221,7 +225,7 @@ dific_laborales_g <- madrileños %>%
         axis.title=element_text(size=10,face="bold"),
         plot.title = element_text(size = 10, face = "bold")) +
   ylab("") +
-  xlab("")+ 
+  xlab("")
   
   dific_laborales_g + ggsave("dific_laborales_g.png")
 
@@ -229,8 +233,9 @@ dific_laborales_g <- madrileños %>%
 # Dificultades conocimiento trámites administrativos en el país de destino
 dific_tramites_g <- madrileños %>%
   filter(!is.na(dific_tramites)) %>%
-  ggplot(aes(dific_tramites, fill = dific_tramites)) +
-  geom_bar(aes(y = (..count..)/sum(..count..), fill=factor(..x..)), stat= "count", fill = "paleturquoise3") +
+  ggplot(aes(dific_tramites)) +
+  scale_fill_brewer(palette="GnBu", aesthetics = "fill") +
+  geom_bar(aes(y = (..count..)/sum(..count..), fill=factor(..x..)), stat= "count") +
   geom_text(aes(label = scales::percent((..count..)/sum(..count..), accuracy = 1),
                 y= ((..count..)/sum(..count..))), stat="count",
             hjust = 0.5, size = 3, vjust= -1,
@@ -249,8 +254,9 @@ dific_tramites_g + ggsave("dific_tramites_g.png")
 # Dificultades conocimiento questiones sanitarias en el país de destino
 dific_sanidad_g <- madrileños %>%
   filter(!is.na(dific_sanidad)) %>%
-  ggplot(aes(dific_sanidad, fill = dific_sanidad)) +
-  geom_bar(aes(y = (..count..)/sum(..count..), fill=factor(..x..)), stat= "count", fill = "paleturquoise3") +
+  ggplot(aes(dific_sanidad)) +
+  scale_fill_brewer(palette="GnBu", aesthetics = "fill") +
+  geom_bar(aes(y = (..count..)/sum(..count..), fill=factor(..x..)), stat= "count") +
   geom_text(aes(label = scales::percent((..count..)/sum(..count..), accuracy = 1),
                 y= ((..count..)/sum(..count..))), stat="count",
             hjust = 0.5, size = 3, vjust= -1,
@@ -269,8 +275,9 @@ dific_sanidad_g + ggsave("dific_sanidad_g.png")
 #Dificultades para integrarse en la  sociedad en el país de destino sociedad en el país de destino
 dific_integracion_g <- madrileños %>%
   filter(!is.na(dific_integracion)) %>%
-  ggplot(aes(dific_integracion, fill = dific_integracion)) +
-  geom_bar(aes(y = (..count..)/sum(..count..), fill=factor(..x..)), stat= "count", fill = "paleturquoise3") +
+  ggplot(aes(dific_integracion)) +
+  scale_fill_brewer(palette="GnBu", aesthetics = "fill") +
+  geom_bar(aes(y = (..count..)/sum(..count..), fill=factor(..x..)), stat= "count") +
   geom_text(aes(label = scales::percent((..count..)/sum(..count..), accuracy = 1),
                 y= ((..count..)/sum(..count..))), stat="count",
             hjust = 0.5, size = 3, vjust= -1,
@@ -290,8 +297,9 @@ dific_integracion_g + ggsave("dific_integracion_g.png")
 # Dificultades psicológicas en el país de destino
 dific_psico_g <- madrileños %>%
   filter(!is.na(dific_psico)) %>%
-  ggplot(aes(dific_psico, fill = dific_psico)) +
-  geom_bar(aes(y = (..count..)/sum(..count..), fill=factor(..x..)), stat= "count", fill = "paleturquoise3") +
+  ggplot(aes(dific_psico)) +
+  scale_fill_brewer(palette="GnBu", aesthetics = "fill") +
+  geom_bar(aes(y = (..count..)/sum(..count..), fill=factor(..x..)), stat= "count") +
   geom_text(aes(label = scales::percent((..count..)/sum(..count..), accuracy = 1),
                 y= ((..count..)/sum(..count..))), stat="count",
             hjust = 0.5, size = 3, vjust= -1,
@@ -343,14 +351,14 @@ frecuencia_gente_mad_g <- madrileños %>%
             inherit.aes = TRUE) +
   scale_y_continuous(labels=scales::percent) +
   theme_hc() +    
-  theme(legend.position = "right",
+  theme(legend.position = "bottom",
         legend.title = element_blank(),
         axis.text.x = element_blank(),
         axis.ticks.x=element_blank()) +
   xlab("") +
   ylab("")
 
-frecuencia_gente_mad_g + ggsave("frecuencia_gente_mad_g.png")
+frecuencia_gente_mad_g + guides(fill=guide_legend(nrow=2,byrow=TRUE, label.hjust = -0.1)) +  ggsave("frecuencia_gente_mad_g.png")
 
 # Grafico de barras con el % apilado si/no informa_esp miembro_aso manifestaciones reuniones (quitando ns/nc en los que queda) 
 #####Faltan Porcentajes##########
@@ -366,17 +374,17 @@ informa_esp_g <- madrileños %>%
             hjust = 0.5, size = 3, vjust= -0.3,
             inherit.aes = TRUE) +
   scale_y_continuous(labels=scales::percent) +
-  theme_hc() + theme(legend.position = "right",
+  theme_hc() + theme(legend.position = "bottom",
                      legend.title = element_blank(),
                      axis.text.x = element_blank(),
                      axis.ticks.x=element_blank()) +
   ylab("") +
   xlab("")
 
-informa_esp_g + ggsave("informa_esp_g.png")
+informa_esp_g + guides(fill=guide_legend(nrow=2,byrow=TRUE, label.hjust = -0.1)) +  ggsave("informa_esp_g.png")
 
 
-miembro_aso_g <- madrileños %>%
+"miembro_aso_g <- madrileños %>%
   filter(!is.na(miembro_aso)) %>%
   filter(miembro_aso %in% c("Sí","No")) %>%
   ggplot(aes(miembro_aso)) +
@@ -436,7 +444,7 @@ reuniones_g <- madrileños %>%
 
 reuniones_g + ggsave("reuniones_g.png")
 
-ggarrange(reuniones_g, manifestaciones_g)
+ggarrange(reuniones_g, manifestaciones_g)"
 
 # Ha participado en las Elecciones generalesde España de noviembre 2019?
 "elecciones_generales_esp_g <- madrileños %>%
@@ -676,21 +684,21 @@ registrado_consulado_g <- madrileños %>%
                                      "Sí, me he inscrito como no residente (estancia temporal)",
                                      "No")) %>%
   ggplot(aes(registrado_consulado)) +
-  scale_fill_brewer(palette="GnBu", aesthetics = "fill", labels = c("Sí, como residente (estancia permanente)", "Sí, como no residente (estancia temporal)", "No")) +
+  scale_fill_brewer(palette="GnBu", aesthetics = "fill", labels = c("Sí, como residente", "Sí, como no residente", "No")) +
   geom_bar(aes(y = (..count..)/sum(..count..), fill=factor(..x..)), stat= "count") +
   geom_text(aes(label = scales::percent((..count..)/sum(..count..), accuracy = 1),
                 y= ((..count..)/sum(..count..))), stat="count",
             hjust = 0.5, size = 3, vjust= -0.5,
             inherit.aes = TRUE) +
   scale_y_continuous(labels=scales::percent) +
-  theme_hc() +    theme(legend.position = "right",
+  theme_hc() +    theme(legend.position = "bottom",
                         legend.title = element_blank(),
                         axis.text.x = element_blank(),
                         axis.ticks.x=element_blank()) +
   ylab("") +
   xlab("")
 
-registrado_consulado_g + ggsave("registrado_consulado_g.png")
+registrado_consulado_g + guides(fill=guide_legend(nrow=2,byrow=TRUE, label.hjust = )) + ggsave("registrado_consulado_g.png")
 
 # Grafico de barras con el % apilado si/no registro_votar registro_documentacion registro_contacto registro_prevencion registro_certificado registro_franquicia registro_transacciones registro_iva
 # Define the number of colors you want
@@ -706,62 +714,79 @@ motivo_registro_g <- madrileños %>%
   filter(!motivo_registro %in% c("NS/NC")) %>%
   ggplot(aes(x = motivo_registro)) +
   geom_bar(aes(y = (..count..)/sum(..count..), fill=factor(..x..)), stat= "count") +
-  scale_fill_manual(values = mycolors, aesthetics = "fill", labels = c("Para votar en España", "Para renovar mi documentación", "Para estar localizable durante COVID-19","Prevención catástrofes / emergencias", "Obtener certificado de emigrante retornado",
-                                                                       "Para gozar de franquicia aduanera", "Transacciones con el exterior / cuentas bancarias", "Beneficiarme excención IVA", "Nacionalización / registro hijos", "Casarse", "Por obligación legal /  responsabilidad", "Otros") ) +
+  scale_fill_manual(values = mycolors, aesthetics = "fill", labels = c("Votar en España", "Renovar mi documentación", " Localizable durante COVID-19","Catástrofes / emergencias", "Certificado de emigrante retornado",
+                                                                       "Franquicia aduanera", "Transacciones / cuentas bancarias", "Excención IVA", "Nacionalización / registro hijos", "Casarse", "Obligación legal / responsabilidad", "Otros") ) +
   geom_text(aes(label = scales::percent((..count..)/sum(..count..), accuracy = 1),
                 y= ((..count..)/sum(..count..))), stat="count",
             hjust = 0.5, size = 3, vjust= -0.5,
             inherit.aes = TRUE) +
   scale_y_continuous(labels=scales::percent) +
-  theme_hc() +    theme(legend.position = "right",
+  theme_hc() +    theme(legend.position = "bottom",
                         legend.title = element_blank(),
                         axis.text.x = element_blank(),
                         axis.ticks.x=element_blank()) +
   ylab("") +
   xlab("")
 
-motivo_registro_g + ggsave("motivo_registro_g.png") 
+motivo_registro_g + guides(fill=guide_legend(nrow=6,byrow=TRUE, label.hjust = -0.03 )) + ggsave("motivo_registro_g.png") 
 
 # Grafico de barras con el % apilado si/no no_registro_conocia no_registro_sabia no_registro_tramites no_registro_padron no_registro_covid no_registro_admin no_registro_aporta
+
+
+cnt <- plyr::count(madrileños$motivo_no_registro)
+madrileños$motivo_no_registro <- factor(madrileños$motivo_no_registro,
+                                     levels = cnt$x[order(cnt$freq, decreasing = TRUE)])
+
 motivo_no_registro_g <- madrileños %>%
   filter(!is.na(motivo_no_registro)) %>%
   ggplot(aes(motivo_no_registro)) +
+  geom_bar(aes(y = (..count..)/sum(..count..), fill=factor(..x..)), stat= "count") +
+  scale_fill_brewer(palette="GnBu", aesthetics = "fill", labels = c("No sabía de 
+esta posibilidad.", "No sabía 
+como hacerlo.", "Trámites complicados/ 
+desplazarme lejos.", "No causar baja 
+en el padrón de España.", "Crísis sanitaria
+COVID-19 lo ha impedido.", "Administración no 
+conozca mi residencia.", "No me interesa", "NS/NC.", "Falta de tiempo.") ) +
+  geom_text(aes(label = scales::percent((..count..)/sum(..count..), accuracy = 1),
+                y= ((..count..)/sum(..count..))), stat="count",
+            hjust = 0.5, size = 3, vjust= -0.5,
+            inherit.aes = TRUE) +
+  scale_y_continuous(labels=scales::percent) +
+  theme_hc() +    theme(legend.position = "bottom",
+                        legend.title = element_blank(),
+                        legend.text = element_text(size = 7),
+                        axis.text.x = element_blank(),
+                        axis.ticks.x=element_blank()) +
+  ylab("") +
+  xlab("")
+
+motivo_no_registro_g + guides(fill=guide_legend(nrow=3,byrow=TRUE, label.hjust = -0.1)) + ggsave("motivo_no_registro.png")
+
+# Grafico de barras con % prob_trabajo
+prob_trabajo_g <- madrileños %>%
+  filter(!is.na(prob_trabajo)) %>%
+  filter(!registrado_consulado %in% c("Ns/Nc")) %>%
+  ggplot(aes(prob_trabajo)) +
+  scale_fill_brewer(palette="GnBu", aesthetics = "fill", labels = c("Muy probable", "Bastante probable", "Poco probable", "Nada probable") ) +
   geom_bar(aes(y = (..count..)/sum(..count..), fill=factor(..x..)), stat= "count") +
   geom_text(aes(label = scales::percent((..count..)/sum(..count..), accuracy = 1),
                 y= ((..count..)/sum(..count..))), stat="count",
             hjust = 0.5, size = 3, vjust= -0.5,
             inherit.aes = TRUE) +
   scale_y_continuous(labels=scales::percent) +
-  theme_hc() +    theme(legend.position = "right",
-                        axis.text.x = element_text(angle = 45, hjust = 1),
-                        axis.text=element_text(size=10),
-                        axis.title=element_text(size=10,face="bold")) +
+  theme_hc() +      theme(legend.position = "bottom",
+                          legend.title = element_blank(),
+                          legend.text = element_text(size = 8),
+                          axis.text.x = element_blank(),
+                          axis.ticks.x=element_blank()) +
   ylab("") +
   xlab("")
 
-motivo_no_registro_g + ggsave("motivo_no_registro.png")
-
-# Grafico de barras con % prob_trabajo
-prob_trabajo_g <- madrileños %>%
-  filter(!is.na(registrado_consulado)) %>%
-  ggplot(aes(prob_trabajo, fill = prob_trabajo)) +
-  geom_bar(aes(y = (..count..)/sum(..count..), fill=factor(..x..)), stat= "count", fill = "paleturquoise3") +
-  geom_text(aes(label = scales::percent((..count..)/sum(..count..), accuracy = 1),
-                y= ((..count..)/sum(..count..))), stat="count",
-            hjust = 0.5, size = 3, vjust= -0.5,
-            inherit.aes = TRUE) +
-  scale_y_continuous(labels=scales::percent) +
-  theme_hc() +      theme(legend.position = "none",
-                          axis.text.x = element_text(angle = 45, hjust = 1),
-                          axis.text=element_text(size=10),
-                          axis.title=element_text(size=10,face="bold")) +
-  ylab("") +
-  xlab("")
-
-prob_trabajo_g + ggsave("prob_trabajo_g.png")
+prob_trabajo_g + guides(fill=guide_legend(nrow=2,byrow=TRUE, label.hjust = -0.1)) + ggsave("prob_trabajo_g.png")
 
 # Grafico de barras con % apilado de categorias emprender_habilidades emprender_experiencia emprender_conocido emprender_oportunidades emprender_fracaso emprender_idea emprender_capital emprender_impuestos emprender_apoyo emprender_innovador
-emprender_habilidades_g <- madrileños %>%
+"emprender_habilidades_g <- madrileños %>%
   filter(!is.na(emprender_habilidades)) %>%
   ggplot(aes(emprender_habilidades, fill = emprender_habilidades)) +
   geom_bar(aes(y = (..count..)/sum(..count..), fill=factor(..x..)), stat= "count", fill = "paleturquoise3") +
@@ -945,13 +970,14 @@ emprender_innovador_g <- madrileños %>%
                            axis.text.x = element_text(angle = 45, hjust = 1)) +
   ylab("") +
   xlab("")
-emprender_innovador_g + ggsave("emprender_innovador_g.png")
+emprender_innovador_g + ggsave("emprender_innovador_g.png")"
 
 # Pie chart % genero
 genero_g <- madrileños %>%
   filter(!is.na(genero)) %>%
   ggplot(aes(genero, fill = genero)) +
-  geom_bar(aes(y = (..count..)/sum(..count..), fill=factor(..x..)), stat= "count", fill = "paleturquoise3") +
+  geom_bar(aes(y = (..count..)/sum(..count..), fill=factor(..x..)), stat= "count") +
+  scale_fill_brewer(palette="GnBu", aesthetics = "fill") +
   geom_text(aes(label = scales::percent((..count..)/sum(..count..), accuracy = 1),
                 y= ((..count..)/sum(..count..))), stat="count",
             hjust = 0.5, size = 3, vjust= -0.5,
@@ -967,43 +993,53 @@ genero_g <- madrileños %>%
 genero_g + ggsave("genero_g.png")
 
 # Grafico de barras con  % estado_civil
+cnt <- plyr::count(madrileños$estado_civil)
+madrileños$estado_civil <- factor(madrileños$estado_civil,
+                                          levels = cnt$x[order(cnt$freq, decreasing = TRUE)])
 
 estado_civil_g <- madrileños %>%
-  filter(!is.na(registrado_consulado)) %>%
-  ggplot(aes(estado_civil, fill = estado_civil)) +
-  geom_bar(aes(y = (..count..)/sum(..count..), fill=factor(..x..)), stat= "count", fill = "paleturquoise3") +
+  filter(!is.na(estado_civil)) %>%
+  ggplot(aes(estado_civil)) +
+  geom_bar(aes(y = (..count..)/sum(..count..), fill=factor(..x..)), stat= "count") +
+  scale_fill_brewer(palette="Blues", aesthetics = "fill", labels = c("Casado/a", "Soltero/a", "Viudo/a", "Separado/a", "Divorciado/a") ) +
   geom_text(aes(label = scales::percent((..count..)/sum(..count..), accuracy = 1),
                 y= ((..count..)/sum(..count..))), stat="count",
             hjust = 0.5, size = 3, vjust= -0.5,
             inherit.aes = TRUE) +
   scale_y_continuous(labels=scales::percent) +
   theme_hc() +       
-  theme(legend.position = "none",
-        axis.text=element_text(size=10),
-        axis.title=element_text(size=10,face="bold"),
-        plot.title = element_text(size = 10, face = "bold"),
-        axis.text.x = element_text(angle = 45, hjust = 1)) +
+  theme(legend.position = "bottom",
+        legend.title = element_blank(),
+        legend.text = element_text(size = 8),
+        axis.text.x = element_blank(),
+        axis.ticks.x=element_blank()) +
   ylab("") +
   xlab("")
 
 estado_civil_g + ggsave("estado_civil_g.png")
 
 # Grafico de barras con  % vive_solo
+cnt <- plyr::count(madrileños$vive_solo)
+madrileños$vive_solo <- factor(madrileños$vive_solo,
+                                  levels = cnt$x[order(cnt$freq, decreasing = TRUE)])
 
 vive_solo_g <- madrileños %>%
   filter(!is.na(vive_solo)) %>%
-  ggplot(aes(vive_solo, fill = vive_solo)) +
-  geom_bar(aes(y = (..count..)/sum(..count..), fill=factor(..x..)), stat= "count", fill = "paleturquoise3") +
+  filter(!vive_solo %in% c("NS/NC")) %>%
+  ggplot(aes(vive_solo)) +
+  geom_bar(aes(y = (..count..)/sum(..count..), fill=factor(..x..)), stat= "count") +
+  scale_fill_brewer(palette="Blues", aesthetics = "fill", labels = c("Solo/a", "Mi pareja", "Mi pareja y algún familiar", "Con amigos/as", "Compañeros/as de piso", "NS/NC") ) +
   geom_text(aes(label = scales::percent((..count..)/sum(..count..), accuracy = 1),
                 y= ((..count..)/sum(..count..))), stat="count",
             hjust = 0.5, size = 3, vjust= -0.5,
             inherit.aes = TRUE) +
   scale_y_continuous(labels=scales::percent) +
-  theme(legend.position = "none",
-        axis.text=element_text(size=10),
-        axis.title=element_text(size=10,face="bold"),
-        plot.title = element_text(size = 10, face = "bold"),
-        axis.text.x = element_text(angle = 45, hjust = 1)) +
+  theme_hc() +       
+  theme(legend.position = "bottom",
+        legend.title = element_blank(),
+        legend.text = element_text(size = 8),
+        axis.text.x = element_blank(),
+        axis.ticks.x=element_blank()) +
   ylab("") +
   xlab("")
 
@@ -1013,75 +1049,98 @@ vive_solo_g + ggsave("vive_solo_g.png")
 # Grafico de barras con  % hijos
 hijos_g <- madrileños %>%
   filter(!is.na(hijos)) %>%
-  ggplot(aes(hijos, fill = hijos)) +
-  geom_bar(aes(y = (..count..)/sum(..count..), fill=factor(..x..)), stat= "count", fill = "paleturquoise3") +
+  filter(!hijos %in% c("Ns/Nc")) %>%
+  ggplot(aes(hijos)) +
+  geom_bar(aes(y = (..count..)/sum(..count..), fill=factor(..x..)), stat= "count") +
+  scale_fill_brewer(palette="Blues", aesthetics = "fill", labels = c("Sí, vive conmigo", "Sí, vive en el mismo país", "Sí, vive en España", "Sí, vive en otro país", "Compañeros/as de piso") ) +
   geom_text(aes(label = scales::percent((..count..)/sum(..count..), accuracy = 1),
                 y= ((..count..)/sum(..count..))), stat="count",
             hjust = 0.5, size = 3, vjust= -0.5,
             inherit.aes = TRUE) +
-  scale_y_continuous(labels=scales::percent) +  theme(legend.position = "none",
-                                                      axis.text=element_text(size=10),
-                                                      axis.title=element_text(size=10,face="bold"),
-                                                      plot.title = element_text(size = 10, face = "bold"),
-                                                      axis.text.x = element_text(angle = 45, hjust = 1)) +
+  scale_y_continuous(labels=scales::percent) + 
+  theme_hc() +       
+  theme(legend.position = "none",
+        legend.title = element_blank(),
+        legend.text = element_text(size = 8),
+        axis.text.x = element_blank(),
+        axis.ticks.x=element_blank()) +
   ylab("") +
   xlab("")
+
 hijos_g + ggsave("hijos_g.png")
 
 # Grafico de barras con  % tamaño_municipio
+cnt <- plyr::count(madrileños$tamaño_municipio)
+madrileños$tamaño_municipio <- factor(madrileños$tamaño_municipio,
+                                          levels = cnt$x[order(cnt$freq, decreasing = TRUE)])
+
 tamaño_municipio_g <- madrileños %>%
   filter(!is.na(tamaño_municipio)) %>%
-  ggplot(aes(tamaño_municipio, fill = tamaño_municipio)) +
-  geom_bar(aes(y = (..count..)/sum(..count..), fill=factor(..x..)), stat= "count", fill = "paleturquoise3") +
+  ggplot(aes(tamaño_municipio)) +
+  geom_bar(aes(y = (..count..)/sum(..count..), fill=factor(..x..)), stat= "count") +
+  scale_fill_brewer(palette="Blues", aesthetics = "fill", labels = c("Aldea/pueblo", "Ciudad (1.001 a 20.000)", "Ciudad (20.001 a 100.000)", "Ciudad (100.001 a 500.000", "Ciudad(Más de 500.001") ) +
   geom_text(aes(label = scales::percent((..count..)/sum(..count..), accuracy = 1),
                 y= ((..count..)/sum(..count..))), stat="count",
             hjust = 0.5, size = 3, vjust= -0.5,
             inherit.aes = TRUE) +
   scale_y_continuous(labels=scales::percent) +  theme(legend.position = "none") +
-  theme(legend.position = "none",
-        axis.text=element_text(size=10),
-        axis.title=element_text(size=10,face="bold"),
-        plot.title = element_text(size = 10, face = "bold"),
-        axis.text.x = element_text(angle = 45, hjust = 1)) +
+  theme_hc() +       
+  theme(legend.position = "bottom",
+        legend.title = element_blank(),
+        legend.text = element_text(size = 8),
+        axis.text.x = element_blank(),
+        axis.ticks.x=element_blank()) +
   ylab("") +
   xlab("")
 
-tamaño_municipio_g+ ggsave("tamaño_municipio_g.png")
+tamaño_municipio_g + guides(fill=guide_legend(nrow=3,byrow=TRUE, label.hjust = -0.1)) + ggsave("tamaño_municipio_g.png")
 
 ############### codigo_postal  queda por recodificar y hacer un grafico  ##########
 # Grafico de barras con  % estudios
+cnt <- plyr::count(madrileños$estudios)
+madrileños$estudios <- factor(madrileños$estudios,
+                                      levels = cnt$x[order(cnt$freq, decreasing = TRUE)])
+
 estudios_g <- madrileños %>%
   filter(!is.na(estudios)) %>%
-  ggplot(aes(estudios, fill = estudios)) +
-  geom_bar(aes(y = (..count..)/sum(..count..), fill=factor(..x..)), stat= "count", fill = "paleturquoise3") +
+  ggplot(aes(estudios)) +
+  scale_fill_brewer(palette="GnBu", aesthetics = "fill", labels = c("Primaria", "Secundaria", "Bachillerato", "Formación profesional", "Grado universitario", "Postgrado", "Doctorado")) +
+  geom_bar(aes(y = (..count..)/sum(..count..), fill=factor(..x..)), stat= "count") +
   geom_text(aes(label = scales::percent((..count..)/sum(..count..), accuracy = 1),
                 y= ((..count..)/sum(..count..))), stat="count",
             hjust = 0.5, size = 3, vjust= -0.5,
             inherit.aes = TRUE) +
-  scale_y_continuous(labels=scales::percent) +  theme(legend.position = "none",
-                                                      axis.text.x = element_text(angle = 45, hjust = 1),
-                                                      axis.text=element_text(size=10))  +
-  scale_x_discrete(labels = c("Primaria", "Secundaria", "Bachillerato", "Formación profesional", "Grado universitario", "Postgrado", "Doctorado")) +
+  scale_y_continuous(labels=scales::percent) +
+  theme_hc() +       
+  theme(legend.position = "bottom",
+        legend.title = element_blank(),
+        legend.text = element_text(size = 8),
+        axis.text.x = element_blank(),
+        axis.ticks.x=element_blank()) +
   ylab("") +
   xlab("")
 
-estudios_g + ggsave("estudios_g.png")
+estudios_g + guides(fill=guide_legend(nrow=3,byrow=TRUE, label.hjust = -0.1))  +ggsave("estudios_g.png")
 
 # Grafico de barras con  % actividad_principal  --- hay muchas categorias, igual habria que juntarlas 0; 1; 2; 3-5; 6; 7; 8-10; 11-13, 14-15 o algo asi, como veas oportuno
 
 # Grafico de barras con  % tipo_contrato
 tipo_contrato_g <- madrileños %>%
   filter(!is.na(tipo_contrato)) %>%
-  ggplot(aes(tipo_contrato, fill = tipo_contrato)) +
-  geom_bar(aes(y = (..count..)/sum(..count..), fill=factor(..x..)), stat= "count", fill = "paleturquoise3") +
+  filter(!tipo_contrato %in% "NS/NC") %>%
+  ggplot(aes(tipo_contrato)) +
+  geom_bar(aes(y = (..count..)/sum(..count..), fill=factor(..x..)), stat= "count") +
+  scale_fill_brewer(palette="Blues", aesthetics = "fill") +
   geom_text(aes(label = scales::percent((..count..)/sum(..count..), accuracy = 1),
                 y= ((..count..)/sum(..count..))), stat="count",
             hjust = 0.5, size = 3, vjust= -0.5,
             inherit.aes = TRUE) +
-  scale_y_continuous(labels=scales::percent) +  theme(legend.position = "none",
-                                                      axis.text=element_text(size=10),
-                                                      axis.title=element_text(size=10,face="bold"),
-                                                      axis.text.x = element_text(angle = 45, hjust = 1)) +
+  scale_y_continuous(labels=scales::percent) +
+  theme_hc() +       
+  theme(legend.position = "none",
+        axis.text=element_text(size=10),
+        axis.title=element_text(size=10,face="bold"),
+        axis.text.x = element_text(angle = 0, hjust = 0.5)) +
   ylab("") +
   xlab("")
 
@@ -1090,38 +1149,50 @@ tipo_contrato_g+ ggsave("tipo_contrato_g.png")
 # Grafico de barras con  % dedicacion
 dedicacion_g <- madrileños %>%
   filter(!is.na(dedicacion)) %>%
-  ggplot(aes(dedicacion, fill = dedicacion)) +
-  geom_bar(aes(y = (..count..)/sum(..count..), fill=factor(..x..)), stat= "count", fill = "paleturquoise3") +
+  filter(!dedicacion %in% "NS/NC") %>%
+  ggplot(aes(dedicacion)) +
+  geom_bar(aes(y = (..count..)/sum(..count..), fill=factor(..x..)), stat= "count") +
+  scale_fill_brewer(palette="Blues", aesthetics = "fill") +
   geom_text(aes(label = scales::percent((..count..)/sum(..count..), accuracy = 1),
                 y= ((..count..)/sum(..count..))), stat="count",
             hjust = 0.5, size = 3, vjust= -0.5,
             inherit.aes = TRUE) +
-  scale_y_continuous(labels=scales::percent) +  theme(legend.position = "none",
-                                                      axis.text=element_text(size=10),
-                                                      axis.title=element_text(size=10,face="bold"),
-                                                      plot.title = element_text(size = 10, face = "bold"),
-                                                      axis.text.x = element_text(angle = 45, hjust = 1)) +
+  scale_y_continuous(labels=scales::percent) + 
+  theme_hc() +       
+  theme(legend.position = "none",
+        axis.text=element_text(size=10),
+        axis.title=element_text(size=10,face="bold"),
+        plot.title = element_text(size = 10, face = "bold"),
+        axis.text.x = element_text(angle = 0, hjust = 0.5)) +
   ylab("") +
-  xlab("")
+  xlab("") +
+  scale_x_discrete(labels = c("Jornada completa", "Jornada parcial", "Por horas")) 
+  
 
 dedicacion_g + ggsave("dedicacion_g.png")
 
 # Grafico de barras con  % salario
+nb.cols <- 10
+mycolors <- colorRampPalette(brewer.pal(8, "GnBu"))(nb.cols)
+
+
 salario_g <- madrileños %>%
   filter(!is.na(salario)) %>%
-  ggplot(aes(salario, fill = salario)) +
-  geom_bar(aes(y = (..count..)/sum(..count..), fill=factor(..x..)), stat= "count", fill = "paleturquoise3") +
+  ggplot(aes(salario)) +
+  geom_bar(aes(y = (..count..)/sum(..count..), fill=factor(..x..)), stat= "count") +
+  scale_fill_manual(values = mycolors, aesthetics = "fill", labels = c("Hasta 500", "501-1.000", "1.001-1.500", "1.501-2.000", "2.001-2.500", "2.501-3.000", "3.001-3.500", "3.501-4.000",  "Más de 4.000", "NS/NC")) +
   geom_text(aes(label = scales::percent((..count..)/sum(..count..), accuracy = 1),
                 y= ((..count..)/sum(..count..))), stat="count",
             hjust = 0.5, size = 3, vjust= -0.5,
             inherit.aes = TRUE) +
-  scale_y_continuous(labels=scales::percent) +  theme(legend.position = "none",
-                                                      axis.text=element_text(size=10),
-                                                      axis.title=element_text(size=10,face="bold"),
-                                                      plot.title = element_text(size = 10, face = "bold"),
-                                                      axis.text.x = element_text(angle = 45, hjust = 1)) +
+  scale_y_continuous(labels=scales::percent) +  
+  theme(legend.position = "bottom",
+        legend.title = element_blank(),
+        legend.text = element_text(size = 8),
+        axis.text.x = element_blank(),
+        axis.ticks.x=element_blank()) +
   ylab("") +
   xlab("")
 
-salario_g +  ggsave("salario_g.png")
+salario_g +guides(fill=guide_legend(nrow=3,byrow=TRUE, label.hjust = -0.1)) +  ggsave("salario_g.png")
 

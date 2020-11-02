@@ -62,18 +62,7 @@ años_fuera_intervalo_g + ggsave("años_fuera_intervalo_g.png")
 #Personalmente tambíen creo q los quesos son bastante poco intuitivos de interpretar no se si podríamos hacer simple gráfico de barras aqui.
 
 # Pie chart de nacido_madrid (en %)
-antes_pais_g <- madrileños %>%
-  filter(!is.na(nacido_madrid)) %>%
-  ggplot(aes(nacido_madrid, fill = nacido_madrid)) +
-  geom_bar() +
-  theme(legend.position = "none",
-        axis.text=element_text(size=10),
-        axis.title=element_text(size=10,face="bold")) +
-  theme(plot.title = element_text(size = 10, face = "bold")) +
-  ggtitle("Nacidos en Madrid") +
-  scale_y_continuous(labels=scales::percent) 
-antes_pais_g +  ylab("") +
-  xlab("") + ggsave("antes_pais_g.png")
+6
 
 # Pie chart de nacionalidad (en %)
 nacionalidad_g <- madrileños %>%
@@ -1104,5 +1093,5 @@ file.copy(from=plots.png.paths, to="C:/Users/Petazetas/Desktop/Madrileños por e
 
 
 
-
+kitar tituloes
 

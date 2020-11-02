@@ -18,7 +18,6 @@ library(scales)
 library(RColorBrewer)
 library(viridis) 
 library(comma_format)
-library(ggpubr)
 
 
 display.brewer.all()
@@ -118,7 +117,7 @@ antes_pais_g <- madrileños %>%
                 y= ((..count..)/sum(..count..))), stat="count",
             hjust = 0.5, size = 3, vjust= -1,
             inherit.aes = TRUE) +
-  scale_y_continuous(labels=scales::percent_format(accuracy = 5L)_format(accuracy = 5L)) +
+  scale_y_continuous(labels=scales::percent_format(accuracy = 5L)) +
   theme_hc() +
   theme(legend.position = "bottom",
         legend.title = element_blank(),
@@ -734,7 +733,8 @@ motivo_registro_g <- madrileños %>%
   theme_hc() +    theme(legend.position = "bottom",
                         legend.title = element_blank(),
                         legend.text = element_text(size = 7),
-                        axis.text.x = element_blank()) +
+                        axis.text.x = element_blank(),
+                        axis.ticks.x=element_blank()) +
   ylab("") +
   xlab("")
 
@@ -763,7 +763,8 @@ motivo_no_registro_g <- madrileños %>%
   theme_hc() +    theme(legend.position = "bottom",
                         legend.title = element_blank(),
                         legend.text = element_text(size = 7),
-                        axis.text.x = element_blank()) +
+                        axis.text.x = element_blank(),
+                        axis.ticks.x=element_blank()) +
   
   ylab("") +
   xlab("")
@@ -993,7 +994,8 @@ genero_g <- madrileños %>%
   theme_hc() +       theme(legend.position = "none",
                            axis.text=element_text(size=10),
                            axis.title=element_text(size=10,face="bold"),
-                           plot.title = element_text(size = 10, face = "bold")) +
+                           plot.title = element_text(size = 10, face = "bold"),
+                           axis.ticks.x=element_blank()) +
   ylab("") +
   xlab("")
 

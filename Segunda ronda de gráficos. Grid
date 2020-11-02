@@ -1,0 +1,297 @@
+# Gráficos en Grid
+# Álvaro y piotr
+# 02/11/20
+# SEgunda ronda de gráficos
+library(gridExtra)
+library(foreign)
+library(dplyr)
+library(tidyverse)
+library(ggplot2)
+library(gtools)
+library(ggthemes)
+library(haven)
+library(ggrepel)
+library(scales)
+library(RColorBrewer)
+library(viridis) 
+library(grid)
+
+
+
+madrileños <- read_dta("MAdxMundo + Libres + Actualizado intervalos fuera.dta")
+madrileños <- as_factor(madrileños)
+
+#Situacion laboral antes de salir de España situación_españa
+madrileños$situacion_españa
+
+cnt <- plyr::count(madrileños$situacion_españa)
+madrileños$situacion_españa <- factor(madrileños$situacion_españa,
+                                levels = cnt$x[order(cnt$freq, decreasing = TRUE)])
+
+situacion_españa_g <- madrileños %>%
+  filter(!is.na(situacion_españa)) %>%
+  ggplot(aes(situacion_españa)) +
+  scale_fill_brewer(palette="Blues", aesthetics = "fill", labels = c("Empleo, debajo expect.", "Empleo, más o menos acorde", "En paro", "Estudiado",
+                                                                     "Otro", "No trabajaba ni estudiaba") ) +
+  geom_bar(aes(y = (..count..)/sum(..count..), fill=factor(..x..)), stat= "count") +
+  geom_text(aes(label = scales::percent((..count..)/sum(..count..), accuracy = 1),
+                y= ((..count..)/sum(..count..))), stat="count",
+            hjust = 0.5, size = 3, vjust= -1,
+            inherit.aes = TRUE) +
+  scale_y_continuous(labels=scales::percent_format(accuracy = 5L)) +
+  theme_hc() +
+  theme(legend.position = "bottom",
+        legend.title = element_blank(),
+        axis.text.x = element_blank(),
+        axis.ticks.x=element_blank()) +
+  ylab("") +
+  xlab("") 
+
+situacion_españa_g + guides(fill=guide_legend(nrow=3,byrow=TRUE, label.hjust = 0)) +ggsave("situacion_españa_g.png")
+
+
+
+
+
+# Gráfico 4.15. Importancia de las barreras para la emigración e integración en el país de acogida 
+
+
+    
+    # Dificultades con el idioma en el país de destino
+    dific_idioma_g <- madrileños %>%
+      filter(!is.na(dific_idioma)) %>%
+      ggplot(aes(dific_idioma, fill = dific_idioma)) +
+      geom_bar(aes(y = (..count..)/sum(..count..), fill=factor(..x..)), stat= "count") +
+      scale_fill_brewer(palette="Blues", aesthetics = "fill", labels = c("Nada en absoluto", "", "", "",
+                                                                         "Totalmente"))+
+      geom_text(aes(label = scales::percent((..count..)/sum(..count..), accuracy = 1),
+                    y= ((..count..)/sum(..count..))), stat="count",
+                hjust = 0.5, size = 3, vjust= -1,
+                inherit.aes = TRUE) +
+      scale_y_continuous(labels=scales::percent_format(accuracy = 5L)) +
+      theme_hc() +  
+      theme(legend.position = "bottom",
+            legend.title = element_blank(),
+            axis.text.x = element_blank(),
+            axis.ticks.x=element_blank()) +
+      ylab("") +
+      xlab("") +
+      ggtitle("Idioma")
+    
+    
+    dific_idioma_g+ ggsave("dific_idioma_g.png")
+    
+    # Dificultades financieras al mudarse al país de destino
+    dific_recursos_g <- madrileños %>%
+      filter(!is.na(dific_recursos)) %>%
+      ggplot(aes(dific_recursos)) +
+      geom_bar(aes(y = (..count..)/sum(..count..), fill=factor(..x..)), stat= "count") +
+      scale_fill_brewer(palette="Blues", aesthetics = "fill")+
+      geom_text(aes(label = scales::percent((..count..)/sum(..count..), accuracy = 1),
+                    y= ((..count..)/sum(..count..))), stat="count",
+                hjust = 0.5, size = 3, vjust= -1,
+                inherit.aes = TRUE) +
+      scale_y_continuous(labels=scales::percent_format(accuracy = 5L)) +
+      theme_hc() +
+      theme(legend.position = "none",
+            legend.title = element_blank(),
+            axis.text.x = element_blank(),
+            axis.ticks.x=element_blank()) +
+      ylab("") +
+      xlab("")
+    
+    dific_recursos_g + ggsave("dific_recursos_g.png")
+    
+    
+    # Dificultades con el idioma en país de destino
+    dific_idioma_g <- madrileños %>%
+      filter(!is.na(dific_idioma)) %>%
+      ggplot(aes(dific_idioma, fill = dific_idioma)) +
+      geom_bar(aes(y = (..count..)/sum(..count..), fill=factor(..x..)), stat= "count") +
+      scale_fill_brewer(palette="Blues", aesthetics = "fill") +
+      geom_text(aes(label = scales::percent((..count..)/sum(..count..), accuracy = 1),
+                    y= ((..count..)/sum(..count..))), stat="count",
+                hjust = 0.5, size = 3, vjust= -1,
+                inherit.aes = TRUE) +
+      scale_y_continuous(labels=scales::percent_format(accuracy = 5L)) +
+      theme_hc() +
+      theme(legend.position = "none",
+            legend.title = element_blank(),
+            axis.text.x = element_blank(),
+            axis.ticks.x=element_blank()) +
+      ylab("") +
+      xlab("")
+    
+    dific_idioma_g + ggsave("dific_idioma_g.png")
+    
+    # Dificultades con el alojamiento en el país de destino
+    dific_alojamiento_g <- madrileños %>%
+      filter(!is.na(dific_alojamiento)) %>%
+      ggplot(aes(dific_alojamiento)) +
+      scale_fill_brewer(palette="Blues", aesthetics = "fill")+
+      geom_bar(aes(y = (..count..)/sum(..count..), fill=factor(..x..)), stat= "count") +
+      geom_text(aes(label = scales::percent((..count..)/sum(..count..), accuracy = 1),
+                    y= ((..count..)/sum(..count..))), stat="count",
+                hjust = 0.5, size = 3, vjust= -1,
+                inherit.aes = TRUE) +
+      scale_y_continuous(labels=scales::percent_format(accuracy = 5L)) +
+      theme_hc() +
+      theme(legend.position = "none",
+            legend.title = element_blank(),
+            axis.text.x = element_blank(),
+            axis.ticks.x=element_blank()) +
+      ylab("") +
+      xlab("")
+    
+    dific_alojamiento_g + ggsave("dific_alojamiento_g.png")
+    
+    # Dificultades laborales en el país de destino
+    dific_laborales_g <- madrileños %>%
+      filter(!is.na(dific_laborales)) %>%
+      ggplot(aes(dific_laborales, fill = dific_laborales)) +
+      scale_fill_brewer(palette="Blues", aesthetics = "fill") +
+      geom_bar(aes(y = (..count..)/sum(..count..), fill=factor(..x..)), stat= "count") +
+      geom_text(aes(label = scales::percent((..count..)/sum(..count..), accuracy = 1),
+                    y= ((..count..)/sum(..count..))), stat="count",
+                hjust = 0.5, size = 3, vjust= -1,
+                inherit.aes = TRUE) +
+      scale_y_continuous(labels=scales::percent_format(accuracy = 5L)) +
+      theme_hc() +
+      theme(legend.position = "none",
+            legend.title = element_blank(),
+            axis.text.x = element_blank(),
+            axis.ticks.x=element_blank()) +
+      ylab("") +
+      xlab("")
+    
+    dific_laborales_g + ggsave("dific_laborales_g.png")
+    
+    
+    # Dificultades conocimiento trámites administrativos en el país de destino
+    dific_tramites_g <- madrileños %>%
+      filter(!is.na(dific_tramites)) %>%
+      ggplot(aes(dific_tramites)) +
+      scale_fill_brewer(palette="Blues", aesthetics = "fill") +
+      geom_bar(aes(y = (..count..)/sum(..count..), fill=factor(..x..)), stat= "count") +
+      geom_text(aes(label = scales::percent((..count..)/sum(..count..), accuracy = 1),
+                    y= ((..count..)/sum(..count..))), stat="count",
+                hjust = 0.5, size = 3, vjust= -1,
+                inherit.aes = TRUE) +
+      scale_y_continuous(labels=scales::percent_format(accuracy = 5L)) +
+      theme_hc() +
+      theme(legend.position = "none",
+            legend.title = element_blank(),
+            axis.text.x = element_blank(),
+            axis.ticks.x=element_blank()) +
+      ylab("") +
+      xlab("")
+    
+    dific_tramites_g + ggsave("dific_tramites_g.png")
+    
+    # Dificultades conocimiento questiones sanitarias en el país de destino
+    dific_sanidad_g <- madrileños %>%
+      filter(!is.na(dific_sanidad)) %>%
+      ggplot(aes(dific_sanidad)) +
+      scale_fill_brewer(palette="Blues", aesthetics = "fill") +
+      geom_bar(aes(y = (..count..)/sum(..count..), fill=factor(..x..)), stat= "count") +
+      geom_text(aes(label = scales::percent((..count..)/sum(..count..), accuracy = 1),
+                    y= ((..count..)/sum(..count..))), stat="count",
+                hjust = 0.5, size = 3, vjust= -1,
+                inherit.aes = TRUE) +
+      scale_y_continuous(labels=scales::percent_format(accuracy = 5L)) +
+      theme_hc() +
+      theme(legend.position = "none",
+            legend.title = element_blank(),
+            axis.text.x = element_blank(),
+            axis.ticks.x=element_blank()) +
+      ylab("") +
+      xlab("")
+    
+    dific_sanidad_g + ggsave("dific_sanidad_g.png")
+    
+    #Dificultades para integrarse en la  sociedad en el país de destino sociedad en el país de destino
+    dific_integracion_g <- madrileños %>%
+      filter(!is.na(dific_integracion)) %>%
+      ggplot(aes(dific_integracion)) +
+      scale_fill_brewer(palette="Blues", aesthetics = "fill") +
+      geom_bar(aes(y = (..count..)/sum(..count..), fill=factor(..x..)), stat= "count") +
+      geom_text(aes(label = scales::percent((..count..)/sum(..count..), accuracy = 1),
+                    y= ((..count..)/sum(..count..))), stat="count",
+                hjust = 0.5, size = 3, vjust= -1,
+                inherit.aes = TRUE) +
+      scale_y_continuous(labels=scales::percent_format(accuracy = 5L)) +
+      theme_hc() +
+      theme(legend.position = "none",
+            legend.title = element_blank(),
+            axis.text.x = element_blank(),
+            axis.ticks.x=element_blank()) +
+      ylab("") +
+      xlab("")
+    
+    dific_integracion_g + ggsave("dific_integracion_g.png")
+    
+    
+    # Dificultades psicológicas en el país de destino
+    dific_psico_g <- madrileños %>%
+      filter(!is.na(dific_psico)) %>%
+      ggplot(aes(dific_psico)) +
+      scale_fill_brewer(palette="Blues", aesthetics = "fill") +
+      geom_bar(aes(y = (..count..)/sum(..count..), fill=factor(..x..)), stat= "count") +
+      geom_text(aes(label = scales::percent((..count..)/sum(..count..), accuracy = 1),
+                    y= ((..count..)/sum(..count..))), stat="count",
+                hjust = 0.5, size = 3, vjust= -1,
+                inherit.aes = TRUE) +
+      scale_y_continuous(labels=scales::percent_format(accuracy = 5L)) +
+      theme_hc() +
+      theme(legend.position = "none",
+            legend.title = element_blank(),
+            axis.text.x = element_blank(),
+            axis.ticks.x=element_blank()) +
+      ylab("") +
+      xlab("")
+    
+    dific_psico_g + ggsave("dific_psico_g.png")  
+
+
+
+# Extract legend
+    
+    grid_arrange_shared_legend <- function(..., ncol = length(list(...)), nrow = 1, position = c("bottom", "right")) {
+      
+      plots <- list(...)
+      position <- match.arg(position)
+      g <- ggplotGrob(plots[[1]] + theme(legend.position = position))$grobs
+      legend <- g[[which(sapply(g, function(x) x$name) == "guide-box")]]
+      lheight <- sum(legend$height)
+      lwidth <- sum(legend$width)
+      gl <- lapply(plots, function(x) x + theme(legend.position="none"))
+      gl <- c(gl, ncol = ncol, nrow = nrow)
+      
+      combined <- switch(position,
+                         "bottom" = arrangeGrob(do.call(arrangeGrob, gl),
+                                                legend,
+                                                ncol = 1,
+                                                heights = unit.c(unit(1, "npc") - lheight, lheight)),
+                         "right" = arrangeGrob(do.call(arrangeGrob, gl),
+                                               legend,
+                                               ncol = 2,
+                                               widths = unit.c(unit(1, "npc") - lwidth, lwidth)))
+      
+      grid.newpage()
+      grid.draw(combined)
+      
+      # return gtable invisibly
+      invisible(combined)
+      
+    }
+   
+     grid_arrange_shared_legend(dific_idioma_g, dific_alojamiento_g, dific_integracion_g, dific_laborales_g, dific_recursos_g, 
+                               dific_sanidad_g, dific_psico_g, dific_tramites_g, ncol = 3, nrow = 3)    
+      
+    
+    
+    
+    
+    
+    
+    
